@@ -1,0 +1,7 @@
+h1 = question.title
+p = question.body
+
+- question.answers.each do |a|
+  p = a.body
+- if user_signed_in?
+  = render 'answers/form'
