@@ -1,19 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-  let(:question) { create(:question) }
-  let(:user) { create(:user) }
+  let!(:user) { create(:user) }
+  let!(:question) { create(:question, user: user) }
 
   describe 'GET #index' do
-    let(:questions) { create_list(:question, 3) }
-    before { get :index }
-
-    it 'populates an array of all questions' do
-      expect(assigns(:questions)).to match_array(questions)
-    end
-
-    it 'renders index view' do
-      expect(response).to render_template :index
+    it 'displays all questions' do
+      get :index
+      expect(response).to have_http_status(:ok)
     end
   end
 
@@ -52,7 +46,7 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'redirects to show' do
         post :create, params: { question: attributes_for(:question) }
-        expect(response).to redirect_to assigns(:question)
+        expect(response).to redirect_to controller.question
       end
     end
 
@@ -73,7 +67,7 @@ RSpec.describe QuestionsController, type: :controller do
     context 'with valid attributes' do
       it 'assigns the requested question to @question' do
         patch :update, params: { id: question, question: attributes_for(:question) }
-        expect(assigns(:question)).to eq question
+        expect(controller.question).to eq question
       end
 
       it 'changes question attributes' do
@@ -105,7 +99,7 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'DELETE #destroy' do
     before { login(user) }
-    let!(:question) { create(:question) }
+    let(:question) { create(:question, user_id: user) }
 
     it 'deletes the question' do
       expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)

@@ -1,7 +1,12 @@
 h1 = question.title
 p = question.body
-
+- if question.user == current_user
+  p = link_to 'Delete question', question, method: :delete
+hr
 - question.answers.each do |a|
   p = a.body
+  / - if a.user == current_user
+  p = link_to 'Delete answer', question_answer_path(a), method: :delete
+  hr
 - if user_signed_in?
   = render 'answers/form'
