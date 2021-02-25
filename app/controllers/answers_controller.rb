@@ -2,12 +2,13 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
 
   expose :answers, from: :question
-  expose :answer, scope: ->{ question.answers }
+  expose :answer
 
   def new
   end
 
   def create
+    question.answers << answer
     if answer.save
       redirect_to question, notice: 'Your answer successfully created.'
     else
