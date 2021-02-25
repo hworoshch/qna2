@@ -5,8 +5,8 @@ p = question.body
 hr
 - question.answers.each do |a|
   p = a.body
-  / - if a.user == current_user
-  p = link_to 'Delete answer', question_answer_path(a), method: :delete
+  - if a.user == current_user
+    p = link_to 'Delete answer', question_answer_path(question, a), method: :delete
   hr
 - if user_signed_in?
   = render 'answers/form'
