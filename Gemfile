@@ -40,3 +40,4 @@ end
 
 gem 'slim-rails'
 gem 'devise'
+gem 'decent_exposure', '~> 3.0'

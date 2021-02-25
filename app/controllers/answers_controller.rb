@@ -1,15 +1,22 @@
 class AnswersController < ApplicationController
+  before_action :authenticate_user!
+
+  expose :answers, from: :question
+  expose :answer, scope: ->{ question.answers }
 
   def new
   end
 
   def create
-    @answer = question.answers.new(answer_params)
-    if @answer.save
+    if answer.save
       redirect_to question, notice: 'Your answer successfully created.'
     else
       render :new
     end
+  end
+
+  def destroy
+    answer.destroy if answer.user == current_user
   end
 
   private
