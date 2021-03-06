@@ -4,20 +4,19 @@ class AnswersController < ApplicationController
   expose :answers, from: :question
   expose :answer
 
-  def new
-  end
-
   def create
     question.answers << answer
+    answer.user = current_user
     if answer.save
       redirect_to question, notice: 'Your answer successfully created.'
     else
-      render :new
+      render question, params: answer_params
     end
   end
 
   def destroy
-    answer.destroy if answer.user == current_user
+    answer.destroy if current_user.owner?(answer)
+    redirect_to question
   end
 
   private

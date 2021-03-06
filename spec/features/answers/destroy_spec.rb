@@ -15,6 +15,7 @@ feature 'user can delete own answers', %q{
     sign_in user
     visit question_path(question)
     click_on 'Delete answer'
+    expect(page).to_not have_content answer.body
   end
 
   scenario 'authenticated user cant delete other`s answer' do

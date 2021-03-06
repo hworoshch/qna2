@@ -6,7 +6,8 @@ feature 'any user can see the list of questions', %q{
   i'd like to be able to see the list of questions
 } do
 
-  given!(:question) { create_list(:question, 5) }
+  given(:user) { create(:user) }
+  given!(:question) { create_list(:question, 5, user: user) }
 
   scenario 'any user can see the list of questions' do
     visit questions_path
