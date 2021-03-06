@@ -6,8 +6,9 @@ feature 'any user can see the question and the list of answers', %q{
   i'd like to be able to see the question and the list of answers
 } do
 
-  given!(:question) { create(:question) }
-  given!(:answers) { create_list(:answer, 5, question: question) }
+  given(:user) { create(:user) }
+  given!(:question) { create(:question, user: user) }
+  given!(:answers) { create_list(:answer, 5, question: question, user: user) }
 
   scenario 'any user can see the question and the list of answers' do
     visit question_path(question)
