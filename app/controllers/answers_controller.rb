@@ -1,16 +1,22 @@
 class AnswersController < ApplicationController
+  before_action :authenticate_user!
 
-  def new
-
-  end
+  expose :answers, from: :question
+  expose :answer
 
   def create
-    @answer = question.answers.new(answer_params)
-    if @answer.save
-      redirect_to question
+    question.answers << answer
+    answer.user = current_user
+    if answer.save
+      redirect_to question, notice: 'Your answer successfully created.'
     else
-      render :new
+      render question, params: answer_params
     end
+  end
+
+  def destroy
+    answer.destroy if current_user.owner?(answer)
+    redirect_to question
   end
 
   private
