@@ -1,3 +1,5 @@
 <% unless answer.persisted? %>
-  $('#answer-<%= answer.id %>').remove();
+  $('#answer-<%= answer.id %>').fadeOut(function() {
+      $(this).remove();
+  });
 <% end %>
