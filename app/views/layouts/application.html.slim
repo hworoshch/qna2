@@ -7,9 +7,10 @@ html
     = csp_meta_tag
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+    = stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload'
   body
-    = render 'shared/nav'
-    hr
-    p.notice = notice
-    p.alert = alert
-    == yield
+    .navbar.bg-dark = render 'shared/nav'
+    .container.pb-5
+      .notice = notice
+      .alert = alert
+      == yield

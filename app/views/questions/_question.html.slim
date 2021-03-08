@@ -1,13 +1,14 @@
-h1 = question.title
-p = question.body
+h1.mb-5 = question.title
+p.mb-3 = question.body
 - if current_user&.owner?(question)
-  p = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }
-  p = link_to 'Delete question', question, method: :delete
+  p
+    = link_to 'Edit', '#', class: 'edit-question-link btn btn-sm btn-primary mr-2', data: { question_id: question.id }
+    = link_to 'Delete question', question, method: :delete, class: 'btn btn-sm btn-danger'
 
   .question-errors
-  = form_with model: question, class: 'hidden', html: { id: "edit-question" }, local: false do |f|
-    = f.label :title
-    = f.text_field :title
-    = f.label :body
-    = f.text_area :body
-    = f.submit 'Save'
+  = form_with model: question, class: 'hidden mt-5', html: { id: "edit-question" }, local: false do |f|
+    = f.label :title, class: 'form-label'
+    = f.text_field :title, class: 'form-control'
+    = f.label :body, class: 'form-label mt-3'
+    = f.text_area :body, class: 'form-control'
+    = f.submit 'Save', class: 'btn btn-success mt-3'

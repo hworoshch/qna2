@@ -1,10 +1,10 @@
 #question = render question
-hr
-h2 Answers
+hr.my-5
+h2.my-5 Answers
 .answers = render answers
 - if user_signed_in?
   .answer-errors
-  = form_with model: [question, answer], class: 'new-answer', local: false do |f|
-    = f.label :body, 'Your answer'
-    = f.text_area :body
-    = f.submit 'Answer'
+  = form_with model: [question, answer], class: 'new-answer mt-5', local: false do |f|
+    = f.label :body, 'Your answer', class: 'form-label'
+    = f.text_area :body, class: 'form-control'
+    = f.submit 'Answer', class: 'btn btn-success mt-3'
