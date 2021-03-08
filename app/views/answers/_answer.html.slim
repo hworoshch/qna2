@@ -1,4 +1,12 @@
-p = answer.body
-- if current_user&.owner?(answer)
-  p = link_to 'Delete answer', answer_path(answer), method: :delete
-hr
+.answer id="answer-#{answer.id}"
+  p = answer.body
+  - if current_user&.owner?(answer)
+    p = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+    p = link_to 'Delete answer', answer_path(answer), method: :delete
+
+    .answer-errors
+    = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }, local: false do |f|
+      = f.label :body, 'Your answer'
+      = f.text_area :body
+      = f.submit 'Save'
+  hr
