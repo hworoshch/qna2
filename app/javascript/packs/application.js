@@ -14,3 +14,6 @@ ActiveStorage.start()
 
 require('packs/answers')
 require('packs/questions')
+
+import 'bootstrap'
+import "../../assets/stylesheets/application"

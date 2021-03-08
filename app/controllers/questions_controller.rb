@@ -24,9 +24,6 @@ class QuestionsController < ApplicationController
     end
   end
 
-  def edit
-  end
-
   def update
     question.update(question_params) if current_user.owner?(question)
   end

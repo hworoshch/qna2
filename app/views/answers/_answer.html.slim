@@ -1,14 +1,14 @@
-.answer id="answer-#{answer.id}" class="#{answer.best ? 'best-answer' : ''}"
+.answer id="answer-#{answer.id}" class="#{answer.best ? 'best-answer border border-3 border-warning p-3 mb-3' : 'border border-3 p-3 mb-3'}"
   p = answer.body
-  - if current_user&.owner?(question) && !answer.best?
-    p = link_to 'Best', best_answer_path(answer), method: :patch, remote: true
-  - if current_user&.owner?(answer)
-    p = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
-    p = link_to 'Delete', answer_path(answer), method: :delete, remote: true
+  p.m-0
+    - if current_user&.owner?(question) && !answer.best?
+      = link_to 'Best', best_answer_path(answer), method: :patch, remote: true, class: 'btn btn-sm btn-success mr-2'
+    - if current_user&.owner?(answer)
+      = link_to 'Edit', '#', class: 'edit-answer-link btn btn-sm btn-primary mr-2', data: { answer_id: answer.id }
+      = link_to 'Delete', answer_path(answer), method: :delete, remote: true, class: 'btn btn-sm btn-danger'
 
-    .answer-errors
-    = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }, local: false do |f|
-      = f.label :body, 'Your answer'
-      = f.text_area :body
-      = f.submit 'Save'
-  hr
+  .answer-errors.bg-danger
+  = form_with model: answer, class: 'hidden mt-4', html: { id: "edit-answer-#{answer.id}" }, local: false do |f|
+    = f.label :body, 'Your answer', class: 'form-label'
+    = f.text_area :body, class: 'form-control'
+    = f.submit 'Save', class: 'btn btn-success mt-3'
