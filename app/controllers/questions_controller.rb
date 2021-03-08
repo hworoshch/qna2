@@ -3,7 +3,7 @@ class QuestionsController < ApplicationController
 
   expose :questions, -> { Question.all }
   expose :question
-  expose :answers, from: :question
+  expose :answers, -> { question.answers.sort_by_best }
   expose :answer, -> { Answer.new }
 
   def index
