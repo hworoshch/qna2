@@ -9,7 +9,7 @@ feature 'authenticated user can create answer on question', %q(
   given(:user) { create(:user) }
   given!(:question) { create(:question, user: user) }
 
-  describe 'authenticated user' do
+  describe 'authenticated user', js: true do
     background do
       sign_in(user)
       visit question_path(question)
@@ -18,8 +18,10 @@ feature 'authenticated user can create answer on question', %q(
     scenario 'answer the question' do
       fill_in 'Your answer', with: 'Answer body'
       click_button 'Answer'
-      expect(page).to have_content 'Your answer successfully created.'
-      expect(page).to have_content 'Answer body'
+      expect(current_path).to eq question_path(question)
+      within '.answers' do
+        expect(page).to have_content 'Answer body'
+      end
     end
 
     scenario 'answer the question with errors' do
@@ -28,7 +30,7 @@ feature 'authenticated user can create answer on question', %q(
     end
   end
 
-  scenario 'unauthenticated user cant answer the question' do
+  scenario 'unauthenticated user cant answer the question', js: true do
     visit question_path(question)
     expect(page).to_not have_field 'Your answer'
     expect(page).to_not have_button 'Answer'
