@@ -11,7 +11,7 @@ feature 'User can edit his answer', %q{
   given!(:answer) { create(:answer, question: question, user: user) }
   given!(:others_answer) { create(:answer, question: question, user: create(:user)) }
 
-  describe 'Authenticated  user', js: true do
+  describe 'Authenticated user', js: true do
     background do
       sign_in(user)
       visit question_path(question)

@@ -1,9 +1,6 @@
-h1 = question.title
-p = question.body
-- if current_user&.owner?(question)
-  p = link_to 'Delete question', question, method: :delete
+#question = render question
 hr
-
+h2 Answers
 .answers = render answers
 - if user_signed_in?
   .answer-errors
