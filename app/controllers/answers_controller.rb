@@ -10,6 +10,10 @@ class AnswersController < ApplicationController
     answer.save
   end
 
+  def update
+    answer.update(answer_params)
+  end
+
   def destroy
     answer.destroy if current_user.owner?(answer)
     redirect_to question

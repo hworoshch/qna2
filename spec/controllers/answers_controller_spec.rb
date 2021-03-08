@@ -13,9 +13,8 @@ RSpec.describe AnswersController, type: :controller do
           expect { post :create, params: { question_id: question, answer: attributes_for(:answer) }, format: :js }.to change(question.answers, :count).by(1)
         end
 
-        it 'redirects to show' do
+        it 'renders create template' do
           post :create, params: { question_id: question, answer: attributes_for(:answer), format: :js }
-          # expect(response).to redirect_to question
           expect(response).to render_template :create
         end
       end
@@ -25,7 +24,7 @@ RSpec.describe AnswersController, type: :controller do
           expect { post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) }, format: :js }.not_to change(Answer, :count)
         end
 
-        it 're-renders with errors' do
+        it 'renders create template' do
           post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid), format: :js }
           expect(response).to render_template :create
         end
@@ -34,6 +33,46 @@ RSpec.describe AnswersController, type: :controller do
 
     it 'unauthenticated user tries to create answer' do
       expect { post :create, params: { question_id: question, answer: attributes_for(:answer) }, format: :js }.not_to change(Answer, :count)
+    end
+  end
+
+  describe 'PATCH #update' do
+    let!(:answer) { create(:answer, question: question, user: user) }
+
+    context 'authenticated user' do
+      before { login(user) }
+
+      context 'update his answer with valid attributes' do
+        it 'changes answer attributes' do
+          patch :update, params: { id: answer, answer: { body: 'corrected answer' } }, format: :js
+          answer.reload
+          expect(answer.body).to eq 'corrected answer'
+        end
+
+        it 'renders update view' do
+          patch :update, params: { id: answer, answer: { body: 'corrected answer' } }, format: :js
+          expect(response).to render_template :update
+        end
+      end
+
+      context 'update his answer with invalid attributes' do
+        it 'doesn`t change answer attributes' do
+          expect do
+            patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) }, format: :js
+          end.to_not change(answer, :body)
+        end
+
+        it 'renders update view' do
+          patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) }, format: :js
+          expect(response).to render_template :update
+        end
+      end
+
+      context 'tries to update other`s answer' do
+      end
+    end
+
+    context 'unauthenticated user tries to update answer' do
     end
   end
 
