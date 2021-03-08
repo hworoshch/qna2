@@ -9,8 +9,8 @@ class AnswersController < ApplicationController
     answer.user = current_user
     if answer.save
       redirect_to question, notice: 'Your answer successfully created.'
-    else
-      render question, params: answer_params
+      # else
+      #   render 'questions/show', params: answer_params
     end
   end
 

@@ -1,1 +1,19 @@
-=render question
+h1 = question.title
+p = question.body
+- if current_user&.owner?(question)
+  p = link_to 'Delete question', question, method: :delete
+hr
+
+.answers
+  - question.answers.each do |a|
+    p = a.body
+    - if current_user&.owner?(a)
+      p = link_to 'Delete answer', answer_path(a), method: :delete
+    hr
+- if user_signed_in?
+  .answer-errors
+    / = render 'shared/errors', resource: answer
+  = form_with model: [question, answer], local: false do |f|
+    = f.label :body, 'Your answer'
+    = f.text_area :body
+    = f.submit 'Answer'
