@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
 
-  expose :answers, from: :question
+  expose :answers, -> { question.answers.sort_by_best }
   expose :answer
 
   def create
@@ -16,7 +16,10 @@ class AnswersController < ApplicationController
 
   def destroy
     answer.destroy if current_user.owner?(answer)
-    redirect_to question
+  end
+
+  def best
+    answer.best! if current_user.owner?(question)
   end
 
   private
