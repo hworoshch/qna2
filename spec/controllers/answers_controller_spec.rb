@@ -101,17 +101,49 @@ RSpec.describe AnswersController, type: :controller do
       before { login user }
 
       it 'deletes own answer' do
-        expect { delete :destroy, params: { question_id: question, id: answer } }.to change(Answer, :count).by(-1)
+        expect { delete :destroy, params: { question_id: question, id: answer }, format: :js }.to change(Answer, :count).by(-1)
       end
 
       it 'try to delete the other`s answer' do
-        expect { delete :destroy, params: { question_id: question, id: others_answer } }.not_to change(Answer, :count)
+        expect { delete :destroy, params: { question_id: question, id: others_answer }, format: :js }.not_to change(Answer, :count)
       end
     end
 
     it 'unauthenticated user tries to delete the answer' do
-      expect { delete :destroy, params: { question_id: question, id: answer } }.not_to change(Answer, :count)
+      expect { delete :destroy, params: { question_id: question, id: answer }, format: :js }.not_to change(Answer, :count)
     end
   end
 
+  describe 'POST#best' do
+    let!(:answer) { create(:answer, question: question, user: user) }
+
+    context 'author of the question' do
+      before do
+        login user
+        patch :best, params: { id: answer }, format: :js
+      end
+
+      it 'choose best answer' do
+        answer.reload
+        expect(answer).to be_best
+      end
+
+      it 'render best template' do
+        expect(response).to render_template :best
+      end
+    end
+
+    it 'not author of the question tries to choose best answer' do
+      login create(:user)
+      patch :best, params: { id: answer }, format: :js
+      answer.reload
+      expect(answer).to_not be_best
+    end
+
+    it 'unauthenticated user tries to choose best answer' do
+      patch :best, params: { id: answer }, format: :js
+      answer.reload
+      expect(answer).to_not be_best
+    end
+  end
 end

@@ -7,25 +7,24 @@ feature 'user can delete own answers', %q{
 } do
 
   given(:user) { create(:user) }
-  given(:second_user) { create(:user) }
+  given(:others_question) { create(:question, user: create(:user)) }
   given!(:question) { create(:question, user: user) }
   given!(:answer) { create(:answer, question: question, user: user) }
 
-  scenario 'authenticated user can delete own answer' do
-    sign_in user
+  scenario 'authenticated user can delete own answer', js: true do
+    sign_in(user)
     visit question_path(question)
-    click_on 'Delete answer'
+    within("#answer-#{answer.id}") { click_on 'Delete' }
     expect(page).to_not have_content answer.body
   end
 
-  scenario 'authenticated user cant delete other`s answer' do
-    sign_in(second_user)
-    visit question_path(question)
-    expect(page).to_not have_link 'Delete answer'
+  scenario 'authenticated user cant delete other`s answer', js: true do
+    visit question_path(others_question)
+    expect(page).to_not have_link 'Delete'
   end
 
-  scenario 'unauthenticated user cant delete answers' do
+  scenario 'unauthenticated user cant delete answer', js: true do
     visit question_path(question)
-    expect(page).to_not have_link 'Delete answer'
+    expect(page).to_not have_link 'Delete'
   end
 end
