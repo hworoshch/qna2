@@ -43,14 +43,14 @@ RSpec.describe AnswersController, type: :controller do
       before { login(user) }
 
       context 'update his answer with valid attributes' do
+        before { patch :update, params: { id: answer, answer: { body: 'corrected answer' } }, format: :js}
+
         it 'changes answer attributes' do
-          patch :update, params: { id: answer, answer: { body: 'corrected answer' } }, format: :js
           answer.reload
           expect(answer.body).to eq 'corrected answer'
         end
 
         it 'renders update view' do
-          patch :update, params: { id: answer, answer: { body: 'corrected answer' } }, format: :js
           expect(response).to render_template :update
         end
       end
@@ -69,10 +69,27 @@ RSpec.describe AnswersController, type: :controller do
       end
 
       context 'tries to update other`s answer' do
+        let!(:others_answer) { create(:answer, question: question, user: create(:user)) }
+
+        it 'doesn`t change answer attributes' do
+          expect do
+            patch :update, params: { id: others_answer, answer: { body: 'corrected answer' } }, format: :js
+          end.to_not change(answer, :body)
+        end
+
+        it 'renders update view' do
+          patch :update, params: { id: others_answer, answer: { body: 'corrected answer' } }, format: :js
+          expect(response).to render_template :update
+        end
       end
     end
 
     context 'unauthenticated user tries to update answer' do
+      it 'doesn`t change answer attributes' do
+        expect do
+          patch :update, params: { id: answer, answer: { body: 'corrected answer' } }, format: :js
+        end.to_not change(answer, :body)
+      end
     end
   end
 

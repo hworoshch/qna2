@@ -13,3 +13,4 @@ Turbolinks.start()
 ActiveStorage.start()
 
 require('packs/answers')
+require('packs/questions')
