@@ -4,7 +4,10 @@
   - if answer.files.attached?
     ul.list-unstyled.mb-3
       - answer.files.each do |file|
-        li.m-0 = link_to file.filename.to_s, url_for(file)
+        li.attachment id="file-#{file.id}"
+          = link_to file.filename.to_s, url_for(file)
+          - if current_user&.owner?(answer)
+            = link_to 'Delete', file_path(file), method: :delete, remote: true, class: 'small text-danger text-uppercase ml-3'
 
   p.m-0
     - if current_user&.owner?(question) && !answer.best?
@@ -13,7 +16,7 @@
       = link_to 'Edit', '#', class: 'edit-answer-link btn btn-sm btn-primary mr-2', data: { answer_id: answer.id }
       = link_to 'Delete', answer_path(answer), method: :delete, remote: true, class: 'btn btn-sm btn-danger'
 
-  .answer-errors.bg-danger
+  .answer-errors
   = form_with model: answer, class: 'hidden mt-4', html: { id: "edit-answer-#{answer.id}" }, local: false do |f|
     .form-group.mt-3
       = f.label :body, 'Your answer', class: 'form-label'

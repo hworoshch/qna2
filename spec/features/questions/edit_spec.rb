@@ -7,10 +7,11 @@ feature 'User can edit his question', %q{
 } do
 
   given!(:user) { create(:user) }
+  given!(:other_user) { create(:user) }
   given!(:question) { create(:question, user: user) }
   given!(:others_question) { create(:question, user: create(:user)) }
 
-  describe 'Authenticated user', js: true do
+  describe 'authenticated user', js: true do
     background do
       sign_in(user)
     end
@@ -46,9 +47,42 @@ feature 'User can edit his question', %q{
         expect(page).to_not have_link 'Edit'
       end
     end
+
+    context 'edit with attachments' do
+      background do
+        visit question_path(question)
+        within("#question") do
+          click_on 'Edit'
+          within("#edit-question") do
+            attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+            click_on 'Save'
+          end
+        end
+      end
+
+      scenario 'add files' do
+        expect(page).to have_link 'rails_helper.rb'
+        expect(page).to have_link 'spec_helper.rb'
+      end
+
+      scenario 'delete files' do
+        first('#question .attachment').click_on 'Delete'
+        within("#question") do
+          expect(page).to_not have_link 'rails_helper.rb'
+          expect(page).to have_link 'spec_helper.rb'
+        end
+      end
+
+      scenario 'tries to delete others question files' do
+        click_link 'Sign out'
+        sign_in(create(:user))
+        visit question_path(question)
+        within first("#question .attachment") { expect(page).to_not have_link 'Delete' }
+      end
+    end
   end
 
-  scenario 'Unauthenticated user cant edit any question' do
+  scenario 'unauthenticated user cant edit any question' do
     visit question_path(question)
     within("#question") do
       expect(page).to_not have_link 'Edit'

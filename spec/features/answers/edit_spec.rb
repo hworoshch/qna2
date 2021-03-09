@@ -42,6 +42,36 @@ feature 'User can edit his answer', %q{
         expect(page).to_not have_link 'Edit'
       end
     end
+
+    context 'edit with attachments' do
+      background do
+        within("#answer-#{answer.id}") do
+          click_on 'Edit'
+          attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+          click_on 'Save'
+        end
+      end
+
+      scenario 'add files' do
+        expect(page).to have_link 'rails_helper.rb'
+        expect(page).to have_link 'spec_helper.rb'
+      end
+
+      scenario 'delete files' do
+        first("#answer-#{answer.id} .attachment").click_on 'Delete'
+        within("#answer-#{answer.id}") do
+          expect(page).to_not have_link 'rails_helper.rb'
+          expect(page).to have_link 'spec_helper.rb'
+        end
+      end
+
+      scenario 'tries to delete others question files' do
+        click_link 'Sign out'
+        sign_in(create(:user))
+        visit question_path(question)
+        within first("#answer-#{answer.id} .attachment") { expect(page).to_not have_link 'Delete' }
+      end
+    end
   end
 
   scenario 'unauthenticated user cant edit any answer' do

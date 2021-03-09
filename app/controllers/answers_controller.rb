@@ -2,7 +2,7 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
 
   expose :answers, -> { question.answers.sort_by_best }
-  expose :answer
+  expose :answer, scope: -> { Answer.with_attached_files }
 
   def create
     question.answers << answer

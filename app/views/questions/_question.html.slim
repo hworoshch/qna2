@@ -4,22 +4,25 @@ p.mb-3 = question.body
 - if question.files.attached?
   ul.list-unstyled.mb-3
     - question.files.each do |file|
-      li.m-0 = link_to file.filename.to_s, url_for(file)
+      li.attachment id="file-#{file.id}"
+        = link_to file.filename.to_s, url_for(file)
+        - if current_user&.owner?(question)
+          = link_to 'Delete', file_path(file), method: :delete, remote: true, class: 'small text-danger text-uppercase ml-3'
 
 - if current_user&.owner?(question)
   = link_to 'Edit', '#', class: 'edit-question-link btn btn-sm btn-primary mr-2', data: { question_id: question.id }
   = link_to 'Delete', question, method: :delete, class: 'btn btn-sm btn-danger'
 
-  .question-errors
-  = form_with model: question, class: 'hidden mt-5', html: { id: "edit-question" }, local: false do |f|
-    .form-group.mt-3
-      = f.label :title, class: 'form-label'
-      = f.text_field :title, class: 'form-control'
-    .form-group.mt-3
-      = f.label :body, class: 'form-label'
-      = f.text_area :body, class: 'form-control'
-    .form-group.custom-file.my-2
-      = f.label :files, class: 'form-label'
-      = f.file_field :files, multiple: true, class: 'form-control-file'
-    .control.mt-3
-      = f.submit 'Save', class: 'btn btn-success'
+.question-errors
+= form_with model: question, class: 'hidden mt-5', html: { id: "edit-question" }, local: false do |f|
+  .form-group.mt-3
+    = f.label :title, class: 'form-label'
+    = f.text_field :title, class: 'form-control'
+  .form-group.mt-3
+    = f.label :body, class: 'form-label'
+    = f.text_area :body, class: 'form-control'
+  .form-group.custom-file.my-2
+    = f.label :files, class: 'form-label'
+    = f.file_field :files, multiple: true, class: 'form-control-file'
+  .control.mt-3
+    = f.submit 'Save', class: 'btn btn-success'
