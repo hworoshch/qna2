@@ -19,15 +19,14 @@ feature 'User can edit his question', %q{
       visit question_path(question)
       within("#question") do
         click_on 'Edit'
-        fill_in 'Title', with: 'corrected title'
-        fill_in 'Body', with: 'corrected question'
+        fill_in 'Title', with: 'new title'
+        fill_in 'Body', with: 'new body'
         click_on 'Save'
-        # wait_for_ajax
-        # expect(page).to_not have_content question.title
-        # expect(page).to_not have_content question.body
-        # expect(page).to have_content 'corrected title'
-        # expect(page).to have_content 'corrected question'
-        # expect(page).to_not have_selector 'textarea'
+        expect(page).to_not have_content question.title
+        expect(page).to_not have_content question.body
+        expect(page).to have_content 'new title'
+        expect(page).to have_content 'new body'
+        expect(page).to_not have_selector 'textarea'
       end
     end
 
