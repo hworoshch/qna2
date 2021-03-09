@@ -9,7 +9,8 @@ html
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
     = stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload'
   body
-    .navbar.bg-dark = render 'shared/nav'
+    .navbar.bg-dark
+      .container = render 'shared/nav'
     .container.pb-5
       .notice = notice
       .alert = alert

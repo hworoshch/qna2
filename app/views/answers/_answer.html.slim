@@ -1,5 +1,11 @@
 .answer id="answer-#{answer.id}" class="#{answer.best ? 'best-answer border border-3 border-warning p-3 mb-3' : 'border border-3 p-3 mb-3'}"
   p = answer.body
+
+  - if answer.files.attached?
+    ul.list-unstyled.mb-3
+      - answer.files.each do |file|
+        li.m-0 = link_to file.filename.to_s, url_for(file)
+
   p.m-0
     - if current_user&.owner?(question) && !answer.best?
       = link_to 'Best', best_answer_path(answer), method: :patch, remote: true, class: 'btn btn-sm btn-success mr-2'
@@ -9,6 +15,11 @@
 
   .answer-errors.bg-danger
   = form_with model: answer, class: 'hidden mt-4', html: { id: "edit-answer-#{answer.id}" }, local: false do |f|
-    = f.label :body, 'Your answer', class: 'form-label'
-    = f.text_area :body, class: 'form-control'
-    = f.submit 'Save', class: 'btn btn-success mt-3'
+    .form-group.mt-3
+      = f.label :body, 'Your answer', class: 'form-label'
+      = f.text_area :body, class: 'form-control'
+    .form-group.mt-3
+      = f.label :files, class: 'form-label'
+      = f.file_field :files, multiple: true, class: 'form-control-file'
+    .control
+      = f.submit 'Save', class: 'btn btn-success mt-3'
