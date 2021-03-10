@@ -23,6 +23,6 @@ p.mb-3 = question.body
     = f.text_area :body, class: 'form-control'
   .form-group.custom-file.my-2
     = f.label :files, class: 'form-label'
-    = f.file_field :files, multiple: true, class: 'form-control-file'
+    = f.file_field :files, multiple: true, direct_upload: true, class: 'form-control-file'
   .control.mt-3
     = f.submit 'Save', class: 'btn btn-success'
