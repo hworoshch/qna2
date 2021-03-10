@@ -12,8 +12,10 @@ Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 
-require('packs/answers')
-require('packs/questions')
+require("packs/answers")
+require("packs/questions")
 
-import "bootstrap"
 import "../../assets/stylesheets/application"
+import "@fortawesome/fontawesome-free/js/all"
+import "bootstrap"
+import "cocoon-js";

@@ -42,3 +42,4 @@ gem 'slim-rails'
 gem 'devise'
 gem 'decent_exposure', '~> 3.0'
 gem 'aws-sdk-s3', require: false
+gem 'cocoon'

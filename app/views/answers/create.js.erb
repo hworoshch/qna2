@@ -1,6 +1,5 @@
 $('.answer-errors').html('<%= render 'shared/errors', resource: answer %>');
 <%- if answer.persisted? %>
   $('<%= j render answer %>').appendTo('.answers').hide().fadeIn();
-  $('.new-answer #answer_body').val('');
-  $('.new-answer #answer_files').val('');
+  $('.new-answer #answer_body, .new-answer #answer_files, .new-answer input[type=text]').val('');
 <% end %>

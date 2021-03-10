@@ -10,6 +10,8 @@ feature 'User can edit his answer', %q{
   given!(:question) { create(:question, user: user) }
   given!(:answer) { create(:answer, question: question, user: user) }
   given!(:others_answer) { create(:answer, question: question, user: create(:user)) }
+  given!(:url) { 'http://rusrails.ru/' }
+  given!(:other_url) { 'http://thinknetica.com/' }
 
   describe 'authenticated user', js: true do
     background do
@@ -70,6 +72,21 @@ feature 'User can edit his answer', %q{
         sign_in(create(:user))
         visit question_path(question)
         within first("#answer-#{answer.id} .attachment") { expect(page).to_not have_link 'Delete' }
+      end
+    end
+
+    scenario 'adds link when edit the answer' do
+      within "#answer-#{answer.id}" do
+        click_on 'Edit'
+        click_on 'Add link'
+        within all('.link-fields').last do
+          fill_in 'Link name', with: 'Other link'
+          fill_in 'URL', with: other_url
+        end
+        click_button 'Save'
+      end
+      within '.answers' do
+        expect(page).to have_link 'Other link', href: other_url
       end
     end
   end

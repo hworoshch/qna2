@@ -1,4 +1,8 @@
+= link_to root_path do
+  i.fas.fa-home
+
 - if user_signed_in?
+  span.text-white = current_user.email
   = link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'text-danger'
 - else
   = link_to 'Sign in', new_user_session_path

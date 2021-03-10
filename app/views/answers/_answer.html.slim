@@ -5,9 +5,17 @@
     ul.list-unstyled.mb-3
       - answer.files.each do |file|
         li.attachment id="file-#{file.id}"
+          i.fas.fa-paperclip.mr-1
           = link_to file.filename.to_s, url_for(file)
           - if current_user&.owner?(answer)
             = link_to 'Delete', file_path(file), method: :delete, remote: true, class: 'small text-danger text-uppercase ml-3'
+
+  - if answer.links.present?
+    ul.list-unstyled.mb-3
+      - answer.links.each do |link|
+        li.link id="link-#{link.id}"
+          i.fas.fa-link.mr-1
+          = link_to link.name, link.url
 
   p.m-0
     - if current_user&.owner?(question) && !answer.best?
@@ -24,5 +32,11 @@
     .form-group.mt-3
       = f.label :files, class: 'form-label'
       = f.file_field :files, multiple: true, direct_upload: true, class: 'form-control-file'
+    h4.mt-5 Links
+    #links.mt-3
+      = f.fields_for :links do |link|
+        = render 'shared/links_fields', f: link
+      .add_link
+        = link_to_add_association 'Add link', f, :links, partial: 'shared/links_fields', class: 'btn btn-primary'
     .control
       = f.submit 'Save', class: 'btn btn-success mt-3'

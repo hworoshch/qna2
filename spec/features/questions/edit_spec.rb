@@ -10,6 +10,8 @@ feature 'User can edit his question', %q{
   given!(:other_user) { create(:user) }
   given!(:question) { create(:question, user: user) }
   given!(:others_question) { create(:question, user: create(:user)) }
+  given!(:url) { 'http://rusrails.ru/' }
+  given!(:other_url) { 'http://thinknetica.com/' }
 
   describe 'authenticated user', js: true do
     background do
@@ -79,6 +81,20 @@ feature 'User can edit his question', %q{
         visit question_path(question)
         within first("#question .attachment") { expect(page).to_not have_link 'Delete' }
       end
+    end
+
+    scenario 'adds link when edit the question' do
+      visit question_path(question)
+      within("#question") do
+        click_on 'Edit'
+        within("#edit-question") do
+          click_on 'Add link'
+          fill_in 'Link name', with: 'My link'
+          fill_in 'URL', with: url
+          click_on 'Save'
+        end
+      end
+      expect(page).to have_link 'My link', href: url
     end
   end
 

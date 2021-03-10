@@ -1,0 +1,12 @@
+.nested-fields.link-fields.mt-4
+  .row
+    .col-11
+      .form-group.row
+        = f.label :name, 'Link name', class: 'form-label col-2'
+        = f.text_field :name, class: 'form-control form-control-sm col-10'
+      .form-group.row
+        = f.label :url, 'URL', class: 'form-label col-2'
+        = f.text_field :url, class: 'form-control form-control-sm col-10'
+    .col-1
+      = link_to_remove_association 'Delete', f, class: 'btn btn-danger btn-sm float-right'
+      hr
