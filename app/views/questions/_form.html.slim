@@ -1,0 +1,15 @@
+.form-group.mt-3
+  = f.label :title, class: 'form-label'
+  = f.text_field :title, class: 'form-control'
+.form-group.mt-3
+  = f.label :body, class: 'form-label'
+  = f.text_area :body, class: 'form-control'
+.form-group.custom-file.my-2
+  = f.label :files, class: 'form-label'
+  = f.file_field :files, multiple: true, direct_upload: true, class: 'form-control-file'
+h4.mt-5 Links
+#links.mt-3
+  = f.fields_for :links do |link|
+    = render 'shared/links_fields', f: link
+  .add_link
+    = link_to_add_association 'Add link', f, :links, partial: 'shared/links_fields', class: 'btn btn-primary'

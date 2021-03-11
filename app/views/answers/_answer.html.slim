@@ -1,23 +1,9 @@
 .answer id="answer-#{answer.id}" class="#{answer.best ? 'best-answer border border-3 border-warning p-3 mb-3' : 'border border-3 p-3 mb-3'}"
   p = answer.body
 
-  - if answer.files.attached?
-    ul.list-unstyled.mb-3
-      - answer.files.each do |file|
-        li.attachment id="file-#{file.id}"
-          i.fas.fa-paperclip.mr-1
-          = link_to file.filename.to_s, url_for(file)
-          - if current_user&.owner?(answer)
-            = link_to 'Delete', file_path(file), method: :delete, remote: true, class: 'small text-danger text-uppercase ml-3'
+  = render 'shared/attachments', resource: answer
 
-  - if answer.links.present?
-    ul.list-unstyled.mb-3
-      - answer.links.each do |link|
-        li.link id="link-#{link.id}"
-          i.fas.fa-link.mr-1
-          = link_to link.name, link.url
-
-  p.m-0
+  .owner.mt-3
     - if current_user&.owner?(question) && !answer.best?
       = link_to 'Best', best_answer_path(answer), method: :patch, remote: true, class: 'btn btn-sm btn-success mr-2'
     - if current_user&.owner?(answer)
@@ -26,17 +12,6 @@
 
   .answer-errors
   = form_with model: answer, class: 'hidden mt-4', html: { id: "edit-answer-#{answer.id}" }, local: false do |f|
-    .form-group.mt-3
-      = f.label :body, 'Your answer', class: 'form-label'
-      = f.text_area :body, class: 'form-control'
-    .form-group.mt-3
-      = f.label :files, class: 'form-label'
-      = f.file_field :files, multiple: true, direct_upload: true, class: 'form-control-file'
-    h4.mt-5 Links
-    #links.mt-3
-      = f.fields_for :links do |link|
-        = render 'shared/links_fields', f: link
-      .add_link
-        = link_to_add_association 'Add link', f, :links, partial: 'shared/links_fields', class: 'btn btn-primary'
+    = render 'answers/form', f: f
     .control
       = f.submit 'Save', class: 'btn btn-success mt-3'

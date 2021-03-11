@@ -1,0 +1,17 @@
+- if resource.files.attached?
+  - resource.files.each do |file|
+    .attachment id="file-#{file.id}"
+      i.fas.fa-paperclip.mr-2
+      = link_to file.filename.to_s, url_for(file)
+      - if current_user&.owner?(resource)
+        = link_to 'Delete', file_path(file), method: :delete, remote: true, class: 'small text-danger text-uppercase ml-3'
+
+- if resource.links.present?
+  - resource.links.each do |link|
+    .link id="link-#{link.id}"
+      - if link.gist_link?
+        i.fas.fa-code.mr-1
+        = link_to link.name, link.url
+      - else
+        i.fas.fa-link.mr-2
+        = link_to link.name, link.url

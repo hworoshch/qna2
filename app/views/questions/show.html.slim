@@ -5,17 +5,6 @@ h2.my-5 Answers
 - if user_signed_in?
   .answer-errors
   = form_with model: [question, answer], class: 'new-answer mt-5', local: false do |f|
-    .form-group.mt-3
-      = f.label :body, 'Your answer', class: 'form-label'
-      = f.text_area :body, class: 'form-control'
-    .form-group.mt-3
-      = f.label :files, class: 'form-label'
-      = f.file_field :files, multiple: true, direct_upload: true, class: 'form-control-file'
-    h4.mt-5 Links
-    .form-group.mt-3
-      = f.fields_for :links do |l|
-        = render 'shared/links_fields', f: l
-      .add_link
-        = link_to_add_association 'Add link', f, :links, partial: 'shared/links_fields', class: 'btn btn-primary'
+    = render 'answers/form', f: f
     .control
       = f.submit 'Answer', class: 'btn btn-success mt-3'
