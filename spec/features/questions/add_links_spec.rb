@@ -38,6 +38,13 @@ feature 'User can add links to question', %q{
       expect(page).to have_link 'Other link', href: other_url
     end
 
+    scenario 'adds gist link when ask question' do
+      fill_in 'URL', with: gist_url
+      click_on 'Ask'
+      expect(page).to have_content 'qna'
+      expect(page).to have_content 'just tesing...'
+    end
+
     scenario 'adds invalid link when ask question' do
       fill_in 'URL', with: 'wrong/url'
       click_on 'Ask'

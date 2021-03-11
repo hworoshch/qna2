@@ -14,6 +14,7 @@ ActiveStorage.start()
 
 require("packs/answers")
 require("packs/questions")
+require("octokit")
 
 import "../../assets/stylesheets/application"
 import "@fortawesome/fontawesome-free/js/all"

@@ -42,6 +42,15 @@ feature 'User can add links to answer', %q{
       end
     end
 
+    scenario 'adds gist link when answer the question' do
+      fill_in 'URL', with: gist_url
+      click_button 'Answer'
+      within '.answers' do
+        expect(page).to have_content 'qna'
+        expect(page).to have_content 'just tesing...'
+      end
+    end
+
     scenario 'adds invalid link when answer the question' do
       fill_in 'URL', with: 'wrong/url'
       click_button 'Answer'

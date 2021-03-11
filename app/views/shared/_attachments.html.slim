@@ -10,8 +10,11 @@
   - resource.links.each do |link|
     .link id="link-#{link.id}"
       - if link.gist_link?
-        i.fas.fa-code.mr-1
-        = link_to link.name, link.url
+        - link.gist_link.each do |file|
+          p.mb-1
+            i.fas.fa-code.mr-1
+            = file[:name]
+          code.ml-4.border.border-1.p-1 = file[:content]
       - else
         i.fas.fa-link.mr-2
         = link_to link.name, link.url
