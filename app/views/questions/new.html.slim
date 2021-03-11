@@ -3,5 +3,14 @@ h1.my-5 Ask new question
 = render 'shared/errors', resource: question
 = form_with model: question, local: true do |f|
   = render 'form', f: f
+  h4.mt-5 Award
+  .form-group.custom-file.award.mt-3
+    = f.fields_for :award do |a|
+      .form-group.my-2
+        = a.label :title, 'Award title', class: 'form-label'
+        = a.text_field :title, class: 'form-control'
+      .form-group.custom-file.my-2
+        = a.label :image, class: 'form-label'
+        = a.file_field :image, direct_upload: true, class: 'form-control-file'
   .control.mt-5
     = f.submit 'Ask', class: 'btn btn-success'

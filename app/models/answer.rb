@@ -1,5 +1,6 @@
 class Answer < ApplicationRecord
   has_many :links, dependent: :destroy, as: :linkable
+  has_one :award, dependent: :destroy
   belongs_to :question
   belongs_to :user
 
@@ -15,6 +16,7 @@ class Answer < ApplicationRecord
     transaction do
       question.answers.update_all(best: false)
       update!(best: true)
+      update!(award: question.award) if question.award
     end
   end
 end

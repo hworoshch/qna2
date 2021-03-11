@@ -10,7 +10,8 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :files, only: [:destroy]
+  resources :files, only: :destroy
+  resources :awards, only: :index
 
   root to: 'questions#index'
 end

@@ -1,0 +1,6 @@
+h1.mb-5 Your awards
+- awards.each do |award|
+  .col-4
+    h4 = award.title
+    = image_tag url_for(award.image), class: 'thumbnail'
+    p = award.question.title

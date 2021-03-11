@@ -3,6 +3,7 @@
 
 - if user_signed_in?
   span.text-white = current_user.email
+  = link_to 'Awards', awards_path, class: 'text-white mr-3'
   = link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'text-danger'
 - else
   = link_to 'Sign in', new_user_session_path

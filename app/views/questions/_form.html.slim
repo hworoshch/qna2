@@ -7,9 +7,4 @@
 .form-group.custom-file.my-2
   = f.label :files, class: 'form-label'
   = f.file_field :files, multiple: true, direct_upload: true, class: 'form-control-file'
-h4.mt-5 Links
-#links.mt-3
-  = f.fields_for :links do |link|
-    = render 'shared/links_fields', f: link
-  .add_link
-    = link_to_add_association 'Add link', f, :links, partial: 'shared/links_fields', class: 'btn btn-primary'
+= render 'shared/links_form', f: f
