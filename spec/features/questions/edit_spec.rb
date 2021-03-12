@@ -9,18 +9,17 @@ feature 'User can edit his question', %q{
   given!(:user) { create(:user) }
   given!(:other_user) { create(:user) }
   given!(:question) { create(:question, user: user) }
-  given!(:others_question) { create(:question, user: create(:user)) }
   given!(:url) { 'http://rusrails.ru/' }
   given!(:other_url) { 'http://thinknetica.com/' }
 
   describe 'authenticated user', js: true do
     background do
       sign_in(user)
+      visit question_path(question)
     end
 
     scenario 'edits his question' do
-      visit question_path(question)
-      within("#question") do
+      within("#question-#{question.id}") do
         click_on 'Edit'
         fill_in 'Title', with: 'new title'
         fill_in 'Body', with: 'new body'
@@ -34,8 +33,7 @@ feature 'User can edit his question', %q{
     end
 
     scenario 'edits his question with errors' do
-      visit question_path(question)
-      within("#question") do
+      within("#question-#{question.id}") do
         click_on 'Edit'
         fill_in 'Body', with: ''
         click_on 'Save'
@@ -44,16 +42,17 @@ feature 'User can edit his question', %q{
     end
 
     scenario "tries to edit other`s question" do
-      visit question_path(others_question)
-      within("#question") do
+      click_link 'Sign out'
+      sign_in(create(:user))
+      visit question_path(question)
+      within("#question-#{question.id}") do
         expect(page).to_not have_link 'Edit'
       end
     end
 
     context 'edit with attachments' do
       background do
-        visit question_path(question)
-        within("#question") do
+        within("#question-#{question.id}") do
           click_on 'Edit'
           within("#edit-question") do
             attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
@@ -68,8 +67,8 @@ feature 'User can edit his question', %q{
       end
 
       scenario 'delete files' do
-        first('#question .attachment').click_on 'Delete'
-        within("#question") do
+        first("#question-#{question.id} .attachment").click_on 'Delete'
+        within("#question-#{question.id}") do
           expect(page).to_not have_link 'rails_helper.rb'
           expect(page).to have_link 'spec_helper.rb'
         end
@@ -79,13 +78,12 @@ feature 'User can edit his question', %q{
         click_link 'Sign out'
         sign_in(create(:user))
         visit question_path(question)
-        within first("#question .attachment") { expect(page).to_not have_link 'Delete' }
+        within first("#question-#{question.id} .attachment") { expect(page).to_not have_link 'Delete' }
       end
     end
 
     scenario 'adds link when edit the question' do
-      visit question_path(question)
-      within("#question") do
+      within("#question-#{question.id}") do
         click_on 'Edit'
         within("#edit-question") do
           click_on 'Add link'
@@ -100,7 +98,7 @@ feature 'User can edit his question', %q{
 
   scenario 'unauthenticated user cant edit any question' do
     visit question_path(question)
-    within("#question") do
+    within("#question-#{question.id}") do
       expect(page).to_not have_link 'Edit'
     end
   end

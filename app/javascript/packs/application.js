@@ -7,6 +7,11 @@ import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
+import "../../assets/stylesheets/application"
+import "@fortawesome/fontawesome-free/js/all"
+import "bootstrap"
+import "cocoon-js"
+import { Octokit } from "@octokit/rest"
 
 Rails.start()
 Turbolinks.start()
@@ -14,9 +19,4 @@ ActiveStorage.start()
 
 require("packs/answers")
 require("packs/questions")
-require("octokit")
-
-import "../../assets/stylesheets/application"
-import "@fortawesome/fontawesome-free/js/all"
-import "bootstrap"
-import "cocoon-js";
+require("packs/votes")

@@ -1,6 +1,6 @@
-h4.mt-5 Links
+h6.mt-5 Links
 #links.mt-3
   = f.fields_for :links do |link|
     = render 'shared/links_fields', f: link
   .add_link
-    = link_to_add_association 'Add link', f, :links, partial: 'shared/links_fields', class: 'btn btn-primary'
+    = link_to_add_association 'Add link', f, :links, partial: 'shared/links_fields', class: 'btn btn-sm btn-primary'

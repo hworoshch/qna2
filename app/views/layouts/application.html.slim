@@ -11,6 +11,12 @@ html
   body
     .navbar.bg-dark
       .container = render 'shared/nav'
+    .container
+      .row
+        .col
+          #flash_messages.text-center
+            - flash.each do |key, message|
+              = content_tag :div, message, class: "flash-#{key}"
     .container.pb-5
       .notice = notice
       .alert = alert

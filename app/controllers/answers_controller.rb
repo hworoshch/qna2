@@ -1,4 +1,6 @@
 class AnswersController < ApplicationController
+  include Voted
+
   before_action :authenticate_user!
 
   expose :answers, -> { question.answers.sort_by_best }
