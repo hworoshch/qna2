@@ -2,7 +2,6 @@ shared_examples 'votable model' do
   let(:model_klass) { described_class.name.underscore.to_sym }
   let(:user) { create(:user) }
   let(:votable) { create(model_klass) }
-  let(:owned_votable) { create(model_klass, user: user) }
 
   it { should have_many(:votes).dependent(:destroy) }
 

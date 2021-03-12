@@ -43,7 +43,6 @@ shared_examples 'voted controller' do
     end
 
     context 'Unauthenticated user' do
-      # before { logout user }
       it "can't vote" do
         expect { post :up, params: { id: voteable }, format: :json }.to_not change(voteable.votes, :count)
       end
@@ -94,8 +93,6 @@ shared_examples 'voted controller' do
     end
 
     context 'Unauthenticated user' do
-      # before { logout(user) }
-
       it 'can not vote' do
         expect { post :up, params: { id: voteable }, format: :json }.to_not change(voteable.votes, :count)
       end
