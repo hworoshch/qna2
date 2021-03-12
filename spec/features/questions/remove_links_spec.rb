@@ -14,7 +14,7 @@ feature 'User can delete links from the question', %q(
     scenario 'removes the link in owned question' do
       sign_in(user)
       visit question_path(question)
-      within '#question' do
+      within "#question-#{question.id}" do
         click_on 'Edit'
         within '#edit-question' do
           click_on 'Delete'

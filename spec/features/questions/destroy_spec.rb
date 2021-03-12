@@ -13,7 +13,7 @@ feature 'user can delete own question', %q{
   scenario 'authenticated user delete own question' do
     sign_in(user)
     visit question_path(question)
-    within('#question') { click_on 'Delete' }
+    within("#question-#{question.id}") { click_on 'Delete' }
     expect(page).to have_content 'Your question has been deleted.'
     expect(page).to_not have_content question.title
     expect(page).to_not have_content question.body
@@ -22,11 +22,11 @@ feature 'user can delete own question', %q{
   scenario 'authenticated user cant delete other`s questions' do
     sign_in(second_user)
     visit question_path(question)
-    within('#question') { expect(page).to_not have_link 'Delete' }
+    within("#question-#{question.id}") { expect(page).to_not have_link 'Delete' }
   end
 
   scenario 'unauthenticated user cant delete questions' do
     visit question_path(question)
-    within('#question') { expect(page).to_not have_link 'Delete' }
+    within("#question-#{question.id}") { expect(page).to_not have_link 'Delete' }
   end
 end
