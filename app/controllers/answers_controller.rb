@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
-  include Voted
-
   before_action :authenticate_user!
+
+  include Voted
 
   expose :answers, -> { question.answers.sort_by_best }
   expose :answer, scope: -> { Answer.with_attached_files }

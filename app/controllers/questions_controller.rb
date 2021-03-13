@@ -1,18 +1,16 @@
 class QuestionsController < ApplicationController
-  include Voted
-
   before_action :authenticate_user!, except: [:index, :show]
+
+  include Voted
 
   expose :questions, -> { Question.all }
   expose :question, scope: -> { Question.with_attached_files }
   expose :answers, -> { question.answers.sort_by_best }
   expose :answer, -> { Answer.new }
 
-  def index
-  end
+  def index; end
 
-  def show
-  end
+  def show; end
 
   def new
     question.build_award
