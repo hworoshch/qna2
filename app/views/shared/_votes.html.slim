@@ -1,8 +1,8 @@
 #votes.text-center
-  - if user_signed_in? && !current_user&.owner?(votable)
+  - if current_user && !current_user&.owner?(votable)
     = link_to polymorphic_path(votable, action: :up), class: 'votes vote-up text-success', method: :post, remote: true do
       i.fas.fa-2x.fa-plus-circle
   .votes-count = votable.rating
-  - if user_signed_in? && !current_user&.owner?(votable)
+  - if current_user && !current_user&.owner?(votable)
     = link_to polymorphic_path(votable, action: :down), class: 'votes vote-down text-danger', method: :post, remote: true do
       i.fas.fa-2x.fa-minus-circle

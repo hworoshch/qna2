@@ -1,0 +1,21 @@
+h1.mb-5 = question.title
+.row.mb-3
+  .col-1
+    = render 'shared/votes', votable: question, current_user: current_user
+  .col-11
+    p = question.body
+
+    = render 'shared/attachments', resource: question, current_user: current_user
+
+    - if current_user&.owner?(question)
+      .owner.mt-3.float-right
+        = link_to 'Edit', '#', class: 'edit-question-link btn btn-sm btn-primary mr-2', data: { question_id: question.id }
+        = link_to 'Delete', question, method: :delete, class: 'btn btn-sm btn-danger'
+      .clearfix
+
+    .question-errors
+    = form_with model: question, class: 'hidden mt-5', html: { id: "edit-question" }, local: false do |f|
+      = render 'form', f: f
+      .control.mt-3
+        = f.submit 'Save', class: 'btn btn-success'
+hr.my-5

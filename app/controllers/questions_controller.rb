@@ -1,5 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
+  after_action :publish_question, only: [:create]
 
   include Voted
 
@@ -10,7 +11,10 @@ class QuestionsController < ApplicationController
 
   def index; end
 
-  def show; end
+  def show
+    gon.question_id = question.id
+    gon.current_user_id = current_user&.id
+  end
 
   def new
     question.build_award
@@ -41,5 +45,19 @@ class QuestionsController < ApplicationController
     params.require(:question).permit(:title, :body, files: [],
                                      links_attributes: [:name, :url, :_destroy, :id],
                                      award_attributes: [:title, :image])
+  end
+
+  def publish_question
+    return if question.errors.any?
+    ActionCable.server.broadcast(
+      'questions',
+      ApplicationController.render(
+        partial: 'questions/question',
+        locals: {
+          question: question,
+          current_user: current_user
+        }
+      )
+    )
   end
 end
