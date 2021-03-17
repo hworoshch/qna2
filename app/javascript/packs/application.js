@@ -12,6 +12,7 @@ import "@fortawesome/fontawesome-free/js/all"
 import "bootstrap"
 import "cocoon-js"
 import { Octokit } from "@octokit/rest"
+import "handlebars-loader"
 
 Rails.start()
 Turbolinks.start()
@@ -20,3 +21,4 @@ ActiveStorage.start()
 require("packs/answers")
 require("packs/questions")
 require("packs/votes")
+// require("handlebars-loader")

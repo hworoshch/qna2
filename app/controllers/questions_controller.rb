@@ -1,5 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :set_gon, only: [:show]
   after_action :publish_question, only: [:create]
 
   include Voted
@@ -11,10 +12,7 @@ class QuestionsController < ApplicationController
 
   def index; end
 
-  def show
-    gon.question_id = question.id
-    gon.current_user_id = current_user&.id
-  end
+  def show; end
 
   def new
     question.build_award
@@ -59,5 +57,10 @@ class QuestionsController < ApplicationController
         }
       )
     )
+  end
+
+  def set_gon
+    gon.question_id = question.id
+    gon.current_user_id = current_user&.id
   end
 end

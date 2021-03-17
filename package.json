@@ -10,6 +10,8 @@
     "@rails/webpacker": "5.2.1",
     "bootstrap": "^4.6.0",
     "cocoon-js": "^0.0.5",
+    "handlebars": "^4.7.7",
+    "handlebars-loader": "^1.7.1",
     "jquery": "^3.6.0",
     "octokit": "^1.0.0-hello-world",
     "popper.js": "^1.16.1",
