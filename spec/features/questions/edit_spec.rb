@@ -62,13 +62,17 @@ feature 'User can edit his question', %q{
       end
 
       scenario 'add files' do
-        expect(page).to have_link 'rails_helper.rb'
-        expect(page).to have_link 'spec_helper.rb'
+        within("#question-#{question.id}") do
+          expect(page).to have_link 'rails_helper.rb'
+          expect(page).to have_link 'spec_helper.rb'
+        end
       end
 
       scenario 'delete files' do
-        first("#question-#{question.id} .attachment").click_on 'Delete'
         within("#question-#{question.id}") do
+          within first(".attachment") do
+            click_on 'Delete'
+          end
           expect(page).to_not have_link 'rails_helper.rb'
           expect(page).to have_link 'spec_helper.rb'
         end

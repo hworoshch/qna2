@@ -1,8 +1,8 @@
-h4.mb-4 Comments
+h4.my-5 Comments
 .comments.mb-4 id="#{commentable.class.name.underscore}_#{commentable.id}_comments" data-commentable="#{commentable.class.name.underscore}" data-commentable-id="#{commentable.id}"
   = render commentable.comments
 - if current_user
-  = link_to 'Add comment', '#', class: 'add-comment btn btn-primary mb-4', data: { commentable: "#{commentable.class.name.underscore}-#{commentable.id}" }
+  = link_to 'Add comment', '#', class: 'add-comment btn btn-primary', data: { commentable: "#{commentable.class.name.underscore}-#{commentable.id}" }
 - if current_user
   = form_with model: [commentable, comment], class: 'comment-form hidden', id: "comment-form-#{commentable.class.name.underscore}-#{commentable.id}", local: false do |f|
     .comment-errors = render 'shared/errors', resource: comment

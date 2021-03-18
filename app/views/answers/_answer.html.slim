@@ -1,8 +1,8 @@
-.row.mb-4 id="answer-#{answer.id}"
+.row.mb-5 id="answer-#{answer.id}"
   .col-1
     = render 'shared/votes', votable: answer
   .col-11
-    .answer.border.rounded.p-3 class="#{answer.best ? 'best-answer border-success' : ''}"
+    .answer class="#{answer.best ? 'best-answer rounded p-3' : ''}"
       p = answer.body
 
       = render 'shared/attachments', resource: answer
@@ -21,4 +21,4 @@
         .control
           = f.submit 'Save', class: 'btn btn-success mt-3'
     .answer-comments.mt-4 = render 'shared/comments', commentable: answer
-hr.my-5
+hr.mb-5
