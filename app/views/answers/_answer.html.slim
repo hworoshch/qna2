@@ -20,3 +20,5 @@
         = render 'answers/form', f: f
         .control
           = f.submit 'Save', class: 'btn btn-success mt-3'
+    .answer-comments.mt-4 = render 'shared/comments', commentable: answer
+hr.my-5

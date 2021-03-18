@@ -9,6 +9,7 @@ class QuestionsController < ApplicationController
   expose :question, scope: -> { Question.with_attached_files }
   expose :answers, -> { question.answers.sort_by_best }
   expose :answer, -> { Answer.new }
+  expose :comment, -> { question.comments.new }
 
   def index; end
 

@@ -7,8 +7,8 @@ $(document).on('turbolinks:load', function () {
     consumer.subscriptions.create({ channel: 'AnswersChannel', question_id: gon.question_id }, {
       received(data) {
         if (gon.current_user_id === data.answer.user_id) return;
-        answersList.append(template(data));
+        answersList.append(template(data)).hide().fadeIn();;
       }
     });
   }
-})
+});

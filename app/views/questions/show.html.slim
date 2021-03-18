@@ -1,7 +1,6 @@
-.question id="question-#{question.id}" = render 'show_question', question: question
+= render 'show_question', question: question
 h2.my-5 Answers
 .answers = render answers
-hr.my-5
 - if user_signed_in?
   = form_with model: [question, answer], class: 'new-answer mt-5', local: false do |f|
     .answer-errors

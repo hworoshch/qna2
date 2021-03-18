@@ -8,8 +8,12 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :questions, concerns: [:votable], except: [:edit] do
-    resources :answers, shallow: true, concerns: [:votable], only: [:create, :update, :destroy] do
+  concern :commentable do
+    resources :comments, shallow: true, only: :create
+  end
+
+  resources :questions, concerns: [:votable, :commentable], except: [:edit] do
+    resources :answers, shallow: true, concerns: [:votable, :commentable], only: [:create, :update, :destroy] do
       member do
         patch :best
         post :delete_file

@@ -1,7 +1,8 @@
-h1.mb-5 = link_to question.title, question
-.row.mb-3
-  .col-1
-    = render 'shared/votes', votable: question, current_user: current_user
-  .col-11
-    p = question.body
+.question id="question-#{question.id}"
+  h1.mb-5 = link_to question.title, question
+  .row.mb-3
+    .col-1
+      = render 'shared/votes', votable: question, current_user: current_user
+    .col-11
+      p = question.body
 hr.my-5

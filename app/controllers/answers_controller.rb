@@ -6,6 +6,7 @@ class AnswersController < ApplicationController
 
   expose :answers, -> { question.answers.sort_by_best }
   expose :answer, scope: -> { Answer.with_attached_files }
+  expose :comment, -> { answer.comments.new }
 
   def create
     question.answers << answer
