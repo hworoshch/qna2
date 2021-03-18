@@ -7,4 +7,10 @@ environment.plugins.prepend('Provide', new webpack.ProvidePlugin({
     Popper: ['popper.js', 'default']
 }))
 
+const HandlebarsLoader = {
+    test: /\.hbs$/,
+    loader: 'handlebars-loader'
+}
+environment.loaders.append('hbs', HandlebarsLoader)
+
 module.exports = environment

@@ -1,10 +1,12 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
+  after_action :publish_answer, only: [:create]
 
   include Voted
 
   expose :answers, -> { question.answers.sort_by_best }
   expose :answer, scope: -> { Answer.with_attached_files }
+  expose :comment, -> { answer.comments.new }
 
   def create
     question.answers << answer
@@ -34,5 +36,11 @@ class AnswersController < ApplicationController
 
   def answer_params
     params.require(:answer).permit(:body, files: [], links_attributes: [:name, :url, :_destroy, :id])
+  end
+
+  def publish_answer
+    return if answer.errors.any?
+    ActionCable.server.broadcast("question_#{question.id}_answers",
+                                 answer: answer)
   end
 end
