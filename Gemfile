@@ -39,10 +39,12 @@ group :test do
 end
 
 gem 'slim-rails'
-gem 'devise'
 gem 'decent_exposure', '~> 3.0'
 gem 'aws-sdk-s3', require: false
 gem 'cocoon'
 gem 'octokit'
 gem 'gon'
-
+gem 'omniauth'
+gem 'omniauth-github'
+gem 'devise', github: 'heartcombo/devise'
+gem 'omniauth-rails_csrf_protection'
