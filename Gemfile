@@ -51,3 +51,4 @@ gem 'omniauth-github'
 gem 'omniauth-vkontakte'
 gem 'devise', github: 'heartcombo/devise'
 gem 'omniauth-rails_csrf_protection'
+
