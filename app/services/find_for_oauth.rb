@@ -9,10 +9,11 @@ class FindForOauth
     authorization = Authorization.where(provider: auth.provider, uid: auth.uid.to_s).first
     return authorization.user if authorization
 
-    email = auth.info[:email]
+    email = auth&.info&.email
+    return unless email
     user = User.where(email: email).first
     user = create_user(email) unless user
-    user.authorizations.create(provider: auth.provider, uid: auth.uid)
+    user.create_authorization(auth)
     user
   end
 

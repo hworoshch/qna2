@@ -1,0 +1,2 @@
+p Welcome #{@email}
+p #{ link_to 'Confirm your account', email_confirmation_authorization_url(confirmation_token: @token) }

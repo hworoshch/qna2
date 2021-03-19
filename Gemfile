@@ -20,6 +20,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails', '~> 4.0.2'
   gem 'factory_bot_rails'
+  gem 'letter_opener'
 end
 
 group :development do
@@ -36,6 +37,7 @@ group :test do
   gem 'shoulda-matchers', '~> 4.0'
   gem 'rails-controller-testing'
   gem 'launchy'
+  gem 'capybara-email'
 end
 
 gem 'slim-rails'
@@ -46,5 +48,6 @@ gem 'octokit'
 gem 'gon'
 gem 'omniauth'
 gem 'omniauth-github'
+gem 'omniauth-vkontakte'
 gem 'devise', github: 'heartcombo/devise'
 gem 'omniauth-rails_csrf_protection'

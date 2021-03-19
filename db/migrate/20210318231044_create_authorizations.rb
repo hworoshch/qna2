@@ -4,10 +4,12 @@ class CreateAuthorizations < ActiveRecord::Migration[6.1]
       t.references :user, null: false, foreign_key: true
       t.string :provider
       t.string :uid
+      t.string :confirmation_token
 
       t.timestamps
     end
 
     add_index :authorizations, [:provider, :uid]
+    add_index :authorizations, :confirmation_token, unique: true
   end
 end
