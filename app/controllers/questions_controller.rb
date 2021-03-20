@@ -16,10 +16,12 @@ class QuestionsController < ApplicationController
   def show; end
 
   def new
+    authorize question
     question.build_award
   end
 
   def create
+    authorize question
     question.user = current_user
     if question.save
       redirect_to question, notice: 'Your question successfully created.'
@@ -30,10 +32,12 @@ class QuestionsController < ApplicationController
   end
 
   def update
+    authorize question
     question.update(question_params) if current_user.owner?(question)
   end
 
   def destroy
+    authorize question
     question.destroy if current_user.owner?(question)
     redirect_to questions_path, notice: 'Your question has been deleted.'
   end

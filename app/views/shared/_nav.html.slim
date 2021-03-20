@@ -1,9 +1,9 @@
-= link_to root_path do
+= link_to root_path, class: 'text-white' do
   i.fas.fa-home
 
 - if user_signed_in?
   span.text-white = current_user.email
   = link_to 'Awards', awards_path, class: 'text-white mr-3'
-  = link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'text-danger'
+  = link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'text-white'
 - else
   = link_to 'Sign in', new_user_session_path
