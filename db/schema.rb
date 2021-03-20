@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_18_084106) do
+ActiveRecord::Schema.define(version: 2021_03_18_231044) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,18 @@ ActiveRecord::Schema.define(version: 2021_03_18_084106) do
     t.bigint "user_id"
     t.boolean "best", default: false
     t.index ["user_id"], name: "index_answers_on_user_id"
+  end
+
+  create_table "authorizations", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "provider"
+    t.string "uid"
+    t.string "confirmation_token"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["confirmation_token"], name: "index_authorizations_on_confirmation_token", unique: true
+    t.index ["provider", "uid"], name: "index_authorizations_on_provider_and_uid"
+    t.index ["user_id"], name: "index_authorizations_on_user_id"
   end
 
   create_table "awards", force: :cascade do |t|
@@ -119,6 +131,7 @@ ActiveRecord::Schema.define(version: 2021_03_18_084106) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "answers", "users"
+  add_foreign_key "authorizations", "users"
   add_foreign_key "awards", "answers"
   add_foreign_key "awards", "questions"
   add_foreign_key "comments", "users"

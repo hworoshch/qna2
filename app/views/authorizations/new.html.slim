@@ -1,0 +1,6 @@
+= form_for(@user, url: authorization_path, method: :post) do |f|
+  .errors = render 'shared/errors', resource: @user
+  .field
+    = f.label :email, 'Email'
+    = f.text_field :email
+  = f.submit 'Sign up'

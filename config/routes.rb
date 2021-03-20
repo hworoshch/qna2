@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: 'oauth_callbacks' }
 
   concern :votable do
     member do
@@ -23,6 +23,9 @@ Rails.application.routes.draw do
 
   resources :files, only: :destroy
   resources :awards, only: :index
+  resource :authorization, only: [:new, :create] do
+    get 'email_confirmation/:confirmation_token', action: :email_confirmation, as: :email_confirmation
+  end
 
   root to: 'questions#index'
 
