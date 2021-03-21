@@ -1,6 +1,5 @@
 class FilesController < ApplicationController
   before_action :authenticate_user!
-  after_action :verify_authorized
 
   def destroy
     @file = ActiveStorage::Attachment.find(params[:id])

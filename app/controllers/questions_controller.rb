@@ -2,7 +2,7 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_gon, only: [:show]
   after_action :publish_question, only: [:create]
-  after_action :verify_authorized, except: [:index, :show]
+  skip_after_action :verify_authorized, only: [:index, :show]
 
   include Voted
 

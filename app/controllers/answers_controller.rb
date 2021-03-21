@@ -1,7 +1,6 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
   after_action :publish_answer, only: [:create]
-  after_action :verify_authorized
 
   include Voted
 

@@ -1,7 +1,6 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
   after_action :publish_comment, only: :create
-  after_action :verify_authorized
 
   expose :comment
 
