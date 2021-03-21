@@ -1,5 +1,6 @@
 class OauthCallbacksController < Devise::OmniauthCallbacksController
   before_action :find_user, only: [:github, :vkontakte]
+  skip_after_action :verify_authorized
 
   def github
     if @user&.persisted?
