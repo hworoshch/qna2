@@ -22,10 +22,10 @@ class QuestionPolicy < ApplicationPolicy
   end
 
   def update?
-    user && (user.admin? || user == record.user)
+    user && (user.admin? || user.owner?(record))
   end
 
   def destroy?
-    user && (user.admin? || user == record.user)
+    user && (user.admin? || user.owner?(record))
   end
 end

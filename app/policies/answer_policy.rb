@@ -10,14 +10,14 @@ class AnswerPolicy < ApplicationPolicy
   end
 
   def update?
-    user && (user.admin? || user == record.user)
+    user && (user.admin? || user.owner?(record))
   end
 
   def destroy?
-    user && (user.admin? || user == record.user)
+    user && (user.admin? || user.owner?(record))
   end
 
   def best?
-    user && (user.admin? || user == record.question.user)
+    user && (user.admin? || user.owner?(record.question))
   end
 end

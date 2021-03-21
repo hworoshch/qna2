@@ -1,7 +1,10 @@
 class FilesController < ApplicationController
+  before_action :authenticate_user!
+  after_action :verify_authorized
+
   def destroy
     @file = ActiveStorage::Attachment.find(params[:id])
-    @resource = @file.record_type.constantize.find(@file.record_id)
-    @file.purge if current_user&.owner?(@resource)
+    authorize @file.record, policy_class: FilePolicy
+    @file.purge
   end
 end

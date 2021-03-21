@@ -1,6 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
   after_action :publish_answer, only: [:create]
+  after_action :verify_authorized
 
   include Voted
 
@@ -17,17 +18,17 @@ class AnswersController < ApplicationController
 
   def update
     authorize answer
-    answer.update(answer_params) if current_user.owner?(answer)
+    answer.update(answer_params)
   end
 
   def destroy
     authorize answer
-    answer.destroy if current_user.owner?(answer)
+    answer.destroy
   end
 
   def best
     authorize answer
-    answer.best! if current_user.owner?(question)
+    answer.best!
   end
 
   private

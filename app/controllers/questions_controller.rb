@@ -2,6 +2,7 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_gon, only: [:show]
   after_action :publish_question, only: [:create]
+  after_action :verify_authorized, except: [:index, :show]
 
   include Voted
 
@@ -33,12 +34,12 @@ class QuestionsController < ApplicationController
 
   def update
     authorize question
-    question.update(question_params) if current_user.owner?(question)
+    question.update(question_params)
   end
 
   def destroy
     authorize question
-    question.destroy if current_user.owner?(question)
+    question.destroy
     redirect_to questions_path, notice: 'Your question has been deleted.'
   end
 
