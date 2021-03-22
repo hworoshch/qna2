@@ -39,7 +39,6 @@ group :test do
   gem 'launchy'
   gem 'capybara-email'
   gem 'pundit-matchers', '~> 1.6.0'
-end
 
 gem 'slim-rails'
 gem 'decent_exposure', '~> 3.0'
