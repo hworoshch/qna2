@@ -1,6 +1,7 @@
 class AuthorizationsController < ApplicationController
   before_action :filter_session, only: [:new, :create_auth]
   before_action :find_user, only: [:create]
+  skip_after_action :verify_authorized
 
   def new
     @user = User.new

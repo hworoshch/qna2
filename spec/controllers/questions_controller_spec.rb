@@ -104,7 +104,6 @@ RSpec.describe QuestionsController, type: :controller do
           end.to_not change(question, :body)
         end
       end
-
     end
   end
 

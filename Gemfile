@@ -38,7 +38,7 @@ group :test do
   gem 'rails-controller-testing'
   gem 'launchy'
   gem 'capybara-email'
-end
+  gem 'pundit-matchers', '~> 1.6.0'
 
 gem 'slim-rails'
 gem 'decent_exposure', '~> 3.0'
@@ -51,4 +51,4 @@ gem 'omniauth-github'
 gem 'omniauth-vkontakte'
 gem 'devise', github: 'heartcombo/devise'
 gem 'omniauth-rails_csrf_protection'
-
+gem 'pundit'

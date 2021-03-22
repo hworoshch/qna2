@@ -1,6 +1,8 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 require 'capybara/email/rspec'
+require 'pundit/rspec'
+require 'pundit/matchers'
 
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
@@ -39,6 +41,7 @@ RSpec.configure do |config|
   config.include ControllerHelpers, type: :controller
   config.include FeatureHelpers, type: :feature
   config.include OmniauthHelpers, type: :feature
+  config.include ActionDispatch::TestProcess::FixtureFile
 
   Capybara.javascript_driver = :selenium_chrome_headless
 
@@ -82,7 +85,10 @@ OmniAuth.config.test_mode = true
 
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
-    with.test_framework :rspec
+    with.test_framework :rspec<<<<<<< 12_authorization
+45
+ 
+
     with.library :rails
   end
 end

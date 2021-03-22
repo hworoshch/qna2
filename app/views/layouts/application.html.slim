@@ -11,7 +11,7 @@ html
     = action_cable_meta_tag
     = Gon::Base.render_data
   body
-    .navbar.bg-dark
+    .navbar class="#{current_user&.admin? ? 'bg-danger' : 'bg-dark'}"
       .container = render 'shared/nav'
     .container
       .row

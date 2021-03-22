@@ -2,6 +2,7 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_gon, only: [:show]
   after_action :publish_question, only: [:create]
+  skip_after_action :verify_authorized, only: [:index, :show]
 
   include Voted
 
@@ -16,10 +17,12 @@ class QuestionsController < ApplicationController
   def show; end
 
   def new
+    authorize question
     question.build_award
   end
 
   def create
+    authorize question
     question.user = current_user
     if question.save
       redirect_to question, notice: 'Your question successfully created.'
@@ -30,11 +33,13 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    question.update(question_params) if current_user.owner?(question)
+    authorize question
+    question.update(question_params)
   end
 
   def destroy
-    question.destroy if current_user.owner?(question)
+    authorize question
+    question.destroy
     redirect_to questions_path, notice: 'Your question has been deleted.'
   end
 

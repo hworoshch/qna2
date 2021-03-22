@@ -31,8 +31,15 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
 
-    it 'unauthenticated user tries to create answer' do
-      expect { post :create, params: { question_id: question, answer: attributes_for(:answer) }, format: :js }.not_to change(Answer, :count)
+    context 'unauthenticated user' do
+      it 'tries to create answer' do
+        expect { post :create, params: { question_id: question, answer: attributes_for(:answer) }, format: :js }.not_to change(Answer, :count)
+      end
+
+      it 'renders 401' do
+        post :create, params: { question_id: question, answer: attributes_for(:answer) }, format: :js
+        expect(response.status).to eq 401
+      end
     end
   end
 
@@ -77,9 +84,9 @@ RSpec.describe AnswersController, type: :controller do
           end.to_not change(answer, :body)
         end
 
-        it 'renders update view' do
+        it 'renders 403' do
           patch :update, params: { id: others_answer, answer: { body: 'corrected answer' } }, format: :js
-          expect(response).to render_template :update
+          expect(response.status).to eq 403
         end
       end
     end
@@ -89,6 +96,11 @@ RSpec.describe AnswersController, type: :controller do
         expect do
           patch :update, params: { id: answer, answer: { body: 'corrected answer' } }, format: :js
         end.to_not change(answer, :body)
+      end
+
+      it 'renders 401' do
+        patch :update, params: { id: answer, answer: { body: 'corrected answer' } }, format: :js
+        expect(response.status).to eq 401
       end
     end
   end
