@@ -1,4 +1,6 @@
 class Api::V1::QuestionsController < Api::V1::BaseController
+  skip_after_action :verify_authorized, only: [:index, :show]
+
   expose :questions, -> { Question.all }
   expose :question, scope: -> { Question.with_attached_files }
 
@@ -11,15 +13,17 @@ class Api::V1::QuestionsController < Api::V1::BaseController
   end
 
   def create
-    question = current_resource_owner.questions.new(question_params)
+    question = authorize current_resource_owner.questions.new(question_params)
     question.save ? head(201) : head(422)
   end
 
   def update
+    authorize question
     question.update(question_params) ? head(:ok) : head(422)
   end
 
   def destroy
+    authorize question
     question.destroy
   end
 

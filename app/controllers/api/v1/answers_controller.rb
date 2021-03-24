@@ -1,4 +1,6 @@
 class Api::V1::AnswersController < Api::V1::BaseController
+  skip_after_action :verify_authorized, only: [:index, :show]
+
   expose :answers, -> { question.answers.sort_by_best }
   expose :answer, scope: -> { Answer.with_attached_files }
 
@@ -11,16 +13,19 @@ class Api::V1::AnswersController < Api::V1::BaseController
   end
 
   def create
+    authorize answer
     question.answers << answer
     answer.user = current_resource_owner
     answer.save ? head(201) : head(422)
   end
 
   def update
+    authorize answer
     answer.update(answer_params) ? head(:ok) : head(422)
   end
 
   def destroy
+    authorize answer
     answer.destroy
   end
 
