@@ -8,36 +8,24 @@ describe 'questions API', type: :request do
   let!(:invalid_params) { { question: attributes_for(:question, :invalid), access_token: access_token.token } }
 
   describe 'GET /api/v1/questions' do
+    let!(:questions) { create_list(:question, 3) }
     let(:api_path) { '/api/v1/questions' }
 
     it_behaves_like 'API authorizable' do
       let(:method) { :get }
     end
 
+    it_behaves_like 'API indexable' do
+      let(:resource) { :question }
+      let(:resource_list) { questions }
+      let(:public_fields) { %w[id title body created_at updated_at] }
+    end
+
     context 'authorized' do
-      let!(:questions) { create_list(:question, 2, user: create(:user)) }
       let(:question) { questions.first }
       let(:question_response) { json['questions'].first }
       let!(:answers) { create_list(:answer, 3, question: question, user: create(:user)) }
       before { get api_path, params: { access_token: access_token.token }, headers: headers }
-
-      it 'returns 200 status' do
-        expect(response).to be_successful
-      end
-
-      it 'returns list of questions' do
-        expect(json['questions'].size).to eq 2
-      end
-
-      it 'returns all public fields' do
-        %w[id title body user_id created_at updated_at].each do |attr|
-          expect(question_response[attr]).to eq question.send(attr).as_json
-        end
-      end
-
-      it 'contains user object' do
-        expect(question_response['user']['id']).to eq question.user.id
-      end
 
       it 'contains short title' do
         expect(question_response['short_title']).to eq question.title.truncate(15)
@@ -68,31 +56,10 @@ describe 'questions API', type: :request do
       let(:method) { :get }
     end
 
-    context 'authorized' do
-      let(:question_response) { json['question'] }
-      let!(:comments) { create_list(:comment, 3, commentable: question, user: user) }
-      let!(:links) { create_list(:link, 3, linkable: question) }
-
-      before { get api_path, params: { access_token: access_token.token }, headers: headers }
-
-      it 'returns 200 status' do
-        expect(response).to be_successful
-      end
-
-      it 'returns all public fields' do
-        %w[id title body created_at updated_at].each do |attr|
-          expect(question_response[attr]).to eq question.send(attr).as_json
-        end
-      end
-
-      context 'with resources' do
-        let(:resource_response) { question_response }
-        let(:files) { question.files }
-
-        it_behaves_like 'API linkable'
-        it_behaves_like 'API commentable'
-        it_behaves_like 'API attachable'
-      end
+    it_behaves_like 'API showable' do
+      let(:resource) { question }
+      let(:resource_response) { json['question'] }
+      let(:public_fields) { %w[id title body created_at updated_at] }
     end
   end
 
@@ -103,14 +70,8 @@ describe 'questions API', type: :request do
       let(:method) { :post }
     end
 
-    context 'authorized' do
-      it 'creates new question with valid params' do
-        expect { post api_path, params: valid_params, headers: headers }.to change(Question, :count).by(1)
-      end
-
-      it 'doesnt create the question with invalid params' do
-        expect { post api_path, params: invalid_params, headers: headers }.to_not change(Question, :count)
-      end
+    it_behaves_like 'API creatable' do
+      let(:resource) { Question }
     end
   end
 
@@ -122,22 +83,10 @@ describe 'questions API', type: :request do
       let(:method) { :put }
     end
 
-    context 'authorized' do
-      it 'updates the question with valid params' do
-        put api_path, params: valid_params, headers: headers
-        question.reload
-        %i[title body].each do |attr|
-          expect(question.send(attr)).to eq valid_params[:question][attr]
-        end
-      end
-
-      it 'doesnt update the question with invalid params' do
-        put api_path, params: invalid_params, headers: headers
-        question.reload
-        %i[title body].each do |attr|
-          expect(question.send(attr)).to_not eq invalid_params[:question][attr]
-        end
-      end
+    it_behaves_like 'API updatable' do
+      let(:resource) { question }
+      let(:params_key) { :question }
+      let(:resource_attr) { %i[title body] }
     end
   end
 
@@ -149,17 +98,8 @@ describe 'questions API', type: :request do
       let(:method) { :delete }
     end
 
-    context 'authorized' do
-      let(:params) { { access_token: access_token.token } }
-
-      it 'returns 200 status' do
-        delete api_path, params: params, headers: headers
-        expect(response).to be_successful
-      end
-
-      it 'deletes the question' do
-        expect { delete api_path, params: params, headers: headers }.to change(Question, :count).by(-1)
-      end
+    it_behaves_like 'API destroyable' do
+      let(:resource) { Question }
     end
   end
 end
