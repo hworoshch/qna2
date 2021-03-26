@@ -42,6 +42,7 @@ RSpec.configure do |config|
   config.include FeatureHelpers, type: :feature
   config.include OmniauthHelpers, type: :feature
   config.include ActionDispatch::TestProcess::FixtureFile
+  config.include ApiHelpers, type: :request
 
   Capybara.javascript_driver = :selenium_chrome_headless
 

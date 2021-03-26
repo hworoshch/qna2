@@ -7,7 +7,7 @@ feature 'any user can see the list of questions', %q{
 } do
 
   given(:user) { create(:user) }
-  given!(:question) { create_list(:question, 5, user: user) }
+  given!(:question) { create_list(:question, 5, user: user, title: 'MyString') }
 
   scenario 'any user can see the list of questions' do
     visit questions_path
