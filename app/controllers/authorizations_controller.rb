@@ -12,7 +12,7 @@ class AuthorizationsController < ApplicationController
       render :new
     else
       authorization = @user.create_unconfirmed_authorization(OmniAuth::AuthHash.new(session[:omniauth]))
-      AuthorizationsMailer.email_confirmation(authorization).deliver_later
+      AuthorizationsMailer.email_confirmation(authorization).deliver_now
       session.delete(:omniauth)
       redirect_to root_path, notice: 'A message with a confirmation link has been sent to your email address. Please follow the link to activate your account.'
     end
