@@ -3,6 +3,7 @@ require 'spec_helper'
 require 'capybara/email/rspec'
 require 'pundit/rspec'
 require 'pundit/matchers'
+require 'sidekiq/testing'
 
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
@@ -43,6 +44,10 @@ RSpec.configure do |config|
   config.include OmniauthHelpers, type: :feature
   config.include ActionDispatch::TestProcess::FixtureFile
   config.include ApiHelpers, type: :request
+
+  config.before(:each) do
+    Sidekiq::Worker.clear_all
+  end
 
   Capybara.javascript_driver = :selenium_chrome_headless
 

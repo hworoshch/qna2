@@ -4,6 +4,7 @@ class Question < ApplicationRecord
 
   has_many :answers, dependent: :destroy
   has_many :links, dependent: :destroy, as: :linkable
+  has_many :subscriptions, dependent: :destroy
   has_one :award, dependent: :destroy
   belongs_to :user
 
@@ -15,11 +16,11 @@ class Question < ApplicationRecord
 
   validates :title, :body, presence: true
 
-  after_create :calculate_reputation
+  after_create :create_owner_subscription
 
   private
 
-  def calculate_reputation
-    ReputationJob.perform_later(self)
+  def create_owner_subscription
+    subscriptions.create!(user: user)
   end
 end

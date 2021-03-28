@@ -15,11 +15,17 @@ class Answer < ApplicationRecord
 
   scope :sort_by_best, -> { order(best: :desc) }
 
+  after_create :subscription_job
+
   def best!
     transaction do
       question.answers.update_all(best: false)
       update!(best: true)
       update!(award: question.award) if question.award
     end
+  end
+
+  def subscription_job
+    AnswersSubscriptionJob.perform_later(self)
   end
 end

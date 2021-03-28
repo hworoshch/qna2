@@ -14,6 +14,8 @@
           = link_to 'Delete', question, method: :delete, class: 'btn btn-sm btn-danger'
         .clearfix
 
+      #subscription = render 'subscriptions/subscription', question: question
+
       .question-errors
       = form_with model: question, class: 'hidden mt-5', html: { id: "edit-question" }, local: false do |f|
         = render 'form', f: f

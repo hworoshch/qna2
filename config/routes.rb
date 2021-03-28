@@ -26,6 +26,7 @@ Rails.application.routes.draw do
         post :delete_file
       end
     end
+    resources :subscriptions, shallow: true, only: [:create, :destroy]
   end
 
   resources :files, only: :destroy

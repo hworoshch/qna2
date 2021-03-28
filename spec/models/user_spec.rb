@@ -4,6 +4,7 @@ RSpec.describe User, type: :model do
   it { should have_many(:authorizations).dependent(:destroy) }
   it { should validate_presence_of :email }
   it { should validate_presence_of :password }
+  it { should have_many(:subscriptions).dependent(:destroy) }
 
   describe 'owner?' do
     let(:user) { create(:user) }
@@ -74,6 +75,15 @@ RSpec.describe User, type: :model do
     it 'auth confirmed' do
       authorization.confirm!
       expect(user).to be_auth_confirmed(auth)
+    end
+  end
+
+  describe 'subscribed?' do
+    let(:user) { create(:user) }
+    let!(:question)  { create(:question, user: user) }
+
+    it 'subscribed to the question' do
+      expect(user).to be_subscribed(question)
     end
   end
 end
