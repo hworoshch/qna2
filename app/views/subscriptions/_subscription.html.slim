@@ -1,0 +1,7 @@
+- if current_user
+  .my-3.float-right
+    - if current_user.subscribed?(question)
+      = link_to 'Unsubscribe', subscription_path(current_user.subscription(question)), method: :delete, remote: true, class: 'btn btn-sm btn-danger'
+    - else
+      = link_to 'Subscribe', question_subscriptions_path(question), method: :post, remote: true, class: 'btn btn-sm btn-primary'
+  .clearfix

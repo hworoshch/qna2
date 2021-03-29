@@ -3,6 +3,7 @@ class User < ApplicationRecord
   has_many :answers, dependent: :destroy
   has_many :awards, through: :answers, dependent: :destroy
   has_many :authorizations, dependent: :destroy
+  has_many :subscriptions, dependent: :destroy
 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable,
          :validatable, :omniauthable, omniauth_providers: [:github, :vkontakte]
@@ -31,5 +32,13 @@ class User < ApplicationRecord
 
   def auth_confirmed?(auth)
     auth && authorizations.find_by(uid: auth.uid, provider: auth.provider)&.confirmed?
+  end
+
+  def subscribed?(question)
+    question.subscriptions.exists?(user: self)
+  end
+
+  def subscription(question)
+    subscriptions.find_by(question_id: question.id)
   end
 end
