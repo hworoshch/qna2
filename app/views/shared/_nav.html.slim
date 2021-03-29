@@ -1,6 +1,6 @@
 = link_to root_path, class: 'text-white' do
   i.fas.fa-home
-
+= link_to 'Search', search_find_path
 - if user_signed_in?
   span.text-white = current_user.email
   = link_to 'Awards', awards_path, class: 'text-white mr-3'

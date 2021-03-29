@@ -39,6 +39,7 @@ group :test do
   gem 'launchy'
   gem 'capybara-email'
   gem 'pundit-matchers', '~> 1.6.0'
+  gem 'database_cleaner-active_record'
 end
 
 gem 'slim-rails'
@@ -59,3 +60,5 @@ gem 'oj'
 gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'whenever', require: false
+gem 'mysql2'
+gem 'thinking-sphinx'

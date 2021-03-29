@@ -1,0 +1,19 @@
+= form_with model: @search, url: search_path, method: :get, local: true do |f|
+  = render 'shared/errors', resource: @search
+  .form-row
+    .col
+      .form-group
+        = f.label :q, 'Search', class: 'form-label'
+        .input-group
+          = f.text_field :q, class: 'form-control'
+          = f.submit 'Search', class: 'btn btn-success'
+      .form-check-inline
+        = f.collection_check_boxes(:indices, Search::INDICES.map { |i| [i.capitalize, i] }, :last, :first, include_hidden: false) do |b|
+          .custom-control.custom-checkbox.mr-3
+            = b.check_box class: 'custom-control-input'
+            = b.label class: 'custom-control-label'
+
+hr.my-5
+.results = render 'results'
+
+p= link_to 'Back', root_path

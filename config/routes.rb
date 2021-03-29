@@ -49,5 +49,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'search/find'
+  get 'search', to: 'search#find'
+
   mount ActionCable.server => '/cable'
 end

@@ -1,8 +1,7 @@
 FactoryBot.define do
-  sequence(:body) { |n| "Answer sample #{n}" }
 
   factory :answer do
-    body
+    sequence(:body) { |n| "Answer sample #{n}" }
     question
     user
     
