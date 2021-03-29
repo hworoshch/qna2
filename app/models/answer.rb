@@ -25,6 +25,8 @@ class Answer < ApplicationRecord
     end
   end
 
+  private
+
   def subscription_job
     AnswersSubscriptionJob.perform_later(self)
   end
