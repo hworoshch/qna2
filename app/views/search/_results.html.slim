@@ -1,0 +1,4 @@
+- unless @search.results.empty?
+  - @search.results.each do |result|
+    = render result.class.name.underscore, result: result
+    hr.mb-3

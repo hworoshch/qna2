@@ -1,0 +1,5 @@
+p.badge.bg-secondary.text-light.small Comment
+h5
+  = link_to result.commentable.is_a?(Question) ? result.commentable : result.commentable.question do
+    = result.commentable.is_a?(Question) ? result.commentable.title : result.commentable.question.title
+p.mb-3 = result.body

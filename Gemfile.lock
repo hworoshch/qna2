@@ -119,6 +119,10 @@ GEM
     concurrent-ruby (1.1.8)
     connection_pool (2.2.3)
     crass (1.0.6)
+    database_cleaner-active_record (2.0.0)
+      activerecord (>= 5.a)
+      database_cleaner-core (~> 2.0.0)
+    database_cleaner-core (2.0.1)
     decent_exposure (3.0.4)
       activesupport (>= 4.0)
     diff-lcs (1.4.4)
@@ -146,9 +150,12 @@ GEM
     hashie (4.1.0)
     i18n (1.8.9)
       concurrent-ruby (~> 1.0)
+    innertube (1.1.0)
     jbuilder (2.11.2)
       activesupport (>= 5.0.0)
     jmespath (1.4.0)
+    joiner (0.6.0)
+      activerecord (>= 6.1.0)
     jsonapi-renderer (0.2.2)
     jwt (2.2.2)
     launchy (2.5.0)
@@ -166,6 +173,7 @@ GEM
     marcel (0.3.3)
       mimemagic (~> 0.3.2)
     method_source (1.0.0)
+    middleware (0.1.0)
     mimemagic (0.3.5)
     mini_mime (1.0.2)
     mini_portile2 (2.5.0)
@@ -176,6 +184,7 @@ GEM
     multipart-post (2.1.1)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
+    mysql2 (0.5.3)
     nio4r (2.5.5)
     nokogiri (1.11.2)
       mini_portile2 (~> 2.5.0)
@@ -265,6 +274,7 @@ GEM
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
+    riddle (2.4.2)
     rspec-core (3.10.1)
       rspec-support (~> 3.10.0)
     rspec-expectations (3.10.1)
@@ -328,6 +338,13 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     temple (0.8.2)
+    thinking-sphinx (5.1.0)
+      activerecord (>= 4.2.0)
+      builder (>= 2.1.2)
+      innertube (>= 1.0.2)
+      joiner (>= 0.3.4)
+      middleware (>= 0.1.0)
+      riddle (~> 2.3)
     thor (1.1.0)
     tilt (2.0.10)
     turbolinks (5.2.1)
@@ -371,6 +388,7 @@ DEPENDENCIES
   capybara (>= 3.26)
   capybara-email
   cocoon
+  database_cleaner-active_record
   decent_exposure (~> 3.0)
   devise!
   doorkeeper (= 5.1.0)
@@ -380,6 +398,7 @@ DEPENDENCIES
   launchy
   letter_opener
   listen (~> 3.3)
+  mysql2
   octokit
   oj
   omniauth
@@ -401,6 +420,7 @@ DEPENDENCIES
   sinatra
   slim-rails
   spring
+  thinking-sphinx
   turbolinks (~> 5)
   web-console (>= 4.1.0)
   webdrivers
