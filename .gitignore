@@ -41,3 +41,4 @@ config/database.yml
 /db/sphinx
 /config/*.sphinx.conf
 vendor/bundle/
+deployer.sh

@@ -5,6 +5,7 @@ set :application, "qna"
 set :repo_url, "git@github.com:hworoshch/qna2.git"
 set :deploy_to, "/home/deployer/qna"
 set :deploy_user, 'deployer'
+set :pty,  false
 
 append :linked_files, "config/database.yml", "config/master.key"
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", "storage"

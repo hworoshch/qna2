@@ -1,14 +1,3 @@
-GIT
-  remote: https://github.com/heartcombo/devise.git
-  revision: e8e0c275999dd98150197cab03acb5509cb16b6a
-  specs:
-    devise (4.7.3)
-      bcrypt (~> 3.0)
-      orm_adapter (~> 0.1)
-      railties (>= 4.1.0)
-      responders
-      warden (~> 1.2.3)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -81,7 +70,7 @@ GEM
     airbrussh (1.4.0)
       sshkit (>= 1.6.1, != 1.7.0)
     aws-eventstream (1.1.1)
-    aws-partitions (1.438.0)
+    aws-partitions (1.439.0)
     aws-sdk-core (3.113.1)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.239.0)
@@ -117,6 +106,10 @@ GEM
     capistrano-rvm (0.1.2)
       capistrano (~> 3.0)
       sshkit (~> 1.2)
+    capistrano-sidekiq (2.0.0)
+      capistrano (>= 3.9.0)
+      capistrano-bundler
+      sidekiq (>= 6.0)
     capybara (3.35.3)
       addressable
       mini_mime (>= 0.1.3)
@@ -142,6 +135,12 @@ GEM
     database_cleaner-core (2.0.1)
     decent_exposure (3.0.4)
       activesupport (>= 4.0)
+    devise (4.7.3)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 4.1.0)
+      responders
+      warden (~> 1.2.3)
     diff-lcs (1.4.4)
     doorkeeper (5.1.0)
       railties (>= 5)
@@ -217,19 +216,18 @@ GEM
       faraday (>= 0.9)
       sawyer (~> 0.8.0, >= 0.5.3)
     oj (3.11.3)
-    omniauth (2.0.3)
+    omniauth (1.9.1)
       hashie (>= 3.4.6)
       rack (>= 1.6.2, < 3)
-      rack-protection
-    omniauth-github (2.0.0)
-      omniauth (~> 2.0)
-      omniauth-oauth2 (~> 1.7.1)
+    omniauth-github (1.4.0)
+      omniauth (~> 1.5)
+      omniauth-oauth2 (>= 1.4.0, < 2.0)
     omniauth-oauth2 (1.7.1)
       oauth2 (~> 1.4)
       omniauth (>= 1.9, < 3)
-    omniauth-rails_csrf_protection (1.0.0)
+    omniauth-rails_csrf_protection (0.1.2)
       actionpack (>= 4.2)
-      omniauth (~> 2.0)
+      omniauth (>= 1.3.1)
     omniauth-vkontakte (1.7.0)
       omniauth-oauth2 (>= 1.5, <= 1.7.1)
     orm_adapter (0.5.0)
@@ -411,12 +409,13 @@ DEPENDENCIES
   capistrano-passenger
   capistrano-rails
   capistrano-rvm
+  capistrano-sidekiq
   capybara (>= 3.26)
   capybara-email
   cocoon
   database_cleaner-active_record
   decent_exposure (~> 3.0)
-  devise!
+  devise
   doorkeeper (= 5.1.0)
   factory_bot_rails
   gon
@@ -427,7 +426,7 @@ DEPENDENCIES
   mysql2
   octokit
   oj
-  omniauth
+  omniauth (~> 1.6, >= 1.6.1)
   omniauth-github
   omniauth-rails_csrf_protection
   omniauth-vkontakte
