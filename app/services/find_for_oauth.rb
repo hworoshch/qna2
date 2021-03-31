@@ -12,7 +12,7 @@ class FindForOauth
     email = auth&.info&.email
     return unless email
     user = User.where(email: email).first
-    user = create_user(email) unless user
+    user ||= create_user(email)
     user.create_authorization(auth)
     user
   end
