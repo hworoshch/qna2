@@ -5,7 +5,8 @@ set :application, "qna"
 set :repo_url, "git@github.com:hworoshch/qna2.git"
 set :deploy_to, "/home/deployer/qna"
 set :deploy_user, "deployer"
-set :pty,  false
+set :rvm_type, :user
+set :rvm_ruby_version, "2.7.2"
 
 set :init_system, :systemd
 set :service_unit_name, "sidekiq"
