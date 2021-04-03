@@ -72,13 +72,13 @@ Rails.application.configure do
   config.action_mailer.default charset: 'utf-8'
 
   config.action_mailer.smtp_settings = {
-    address: 'smtp.gmail.com',
-    port: 587,
-    domain: 'gmail.com',
+    address: 'smtp.mail.ru',
+    port: 465,
+    domain: 'mail.ru',
     authentication: 'plain',
     user_name: Rails.application.credentials[Rails.env.to_sym][:mailer][:user_name],
     password: Rails.application.credentials[Rails.env.to_sym][:mailer][:password],
-    enable_starttls_auto: true
+    tls: true
   }
 
   # Ignore bad email addresses and do not raise email delivery errors.
