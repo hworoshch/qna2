@@ -4,12 +4,13 @@ require 'capistrano/deploy'
 require 'capistrano/rvm'
 require 'capistrano/bundler'
 require 'capistrano/rails'
-require 'capistrano/passenger'
+# require 'capistrano/passenger'
 require 'capistrano/sidekiq'
 install_plugin Capistrano::Sidekiq
 install_plugin Capistrano::Sidekiq::Systemd
 require 'thinking_sphinx/capistrano'
 require 'whenever/capistrano'
+require 'capistrano3/unicorn'
 
 require "capistrano/scm/git"
 install_plugin Capistrano::SCM::Git
