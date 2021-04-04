@@ -1,4 +1,5 @@
-.comment.card.mb-3 id="comment-#{comment.id}"
-  .body.card-body
-    p = comment.body
-    p.small.m-0.text-right = "#{comment.user.email}"
+- cache comment do
+  .comment.card.mb-3 id="comment-#{comment.id}"
+    .body.card-body
+      p = comment.body
+      p.small.m-0.text-right = "#{comment.user.email}"

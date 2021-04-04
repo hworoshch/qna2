@@ -1,24 +1,25 @@
-.row.mb-5 id="answer-#{answer.id}"
-  .col-1
-    = render 'shared/votes', votable: answer
-  .col-11
-    .answer class="#{answer.best ? 'best-answer rounded p-3' : ''}"
-      p = answer.body
+- cache answer do
+  .row.mb-5 id="answer-#{answer.id}"
+    .col-1
+      = render 'shared/votes', votable: answer
+    .col-11
+      .answer class="#{answer.best ? 'best-answer rounded p-3' : ''}"
+        p = answer.body
 
-      = render 'shared/attachments', resource: answer
+        = render 'shared/attachments', resource: answer
 
-      .owner.mt-3.float-right
-        - if current_user&.owner?(question) && !answer.best?
-          = link_to 'Best', best_answer_path(answer), method: :patch, remote: true, class: 'btn btn-sm btn-success mr-2'
-        - if current_user&.owner?(answer)
-          = link_to 'Edit', '#', class: 'edit-answer-link btn btn-sm btn-primary mr-2', data: { answer_id: answer.id }
-          = link_to 'Delete', answer_path(answer), method: :delete, remote: true, class: 'btn btn-sm btn-danger'
-      .clearfix
+        .owner.mt-3.float-right
+          - if current_user&.owner?(question) && !answer.best?
+            = link_to 'Best', best_answer_path(answer), method: :patch, remote: true, class: 'btn btn-sm btn-success mr-2'
+          - if current_user&.owner?(answer)
+            = link_to 'Edit', '#', class: 'edit-answer-link btn btn-sm btn-primary mr-2', data: { answer_id: answer.id }
+            = link_to 'Delete', answer_path(answer), method: :delete, remote: true, class: 'btn btn-sm btn-danger'
+        .clearfix
 
-      = form_with model: answer, class: 'hidden mt-4', html: { id: "edit-answer-#{answer.id}" }, local: false do |f|
-        .answer-errors
-        = render 'answers/form', f: f
-        .control
-          = f.submit 'Save', class: 'btn btn-success mt-3'
-    .answer-comments.mt-4 = render 'shared/comments', commentable: answer
-hr.mb-5
+        = form_with model: answer, class: 'hidden mt-4', html: { id: "edit-answer-#{answer.id}" }, local: false do |f|
+          .answer-errors
+          = render 'answers/form', f: f
+          .control
+            = f.submit 'Save', class: 'btn btn-success mt-3'
+      .answer-comments.mt-4 = render 'shared/comments', commentable: answer
+  hr.mb-5
