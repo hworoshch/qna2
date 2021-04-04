@@ -70,4 +70,4 @@ gem 'whenever', require: false
 gem 'mysql2'
 gem 'thinking-sphinx'
 gem 'unicorn'
-gem 'redis-rails'
+# gem 'redis-rails'
